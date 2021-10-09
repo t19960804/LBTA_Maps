@@ -1,17 +1,14 @@
-//
-//  ViewController.swift
-//  LBTA_Maps
-//
-//  Created by t19960804 on 10/9/21.
-//
-
 import UIKit
+import MapKit
+import LBTATools
 
-class ViewController: UIViewController {
-
+class MapController: UIViewController {
+    let mapView = MKMapView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.addSubview(mapView)
+        mapView.fillSuperview()
     }
 
 
