@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B257B952711C66200852D96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B257B942711C66200852D96 /* AppDelegate.swift */; };
 		0B257B972711C66200852D96 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B257B962711C66200852D96 /* SceneDelegate.swift */; };
-		0B257B992711C66200852D96 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B257B982711C66200852D96 /* ViewController.swift */; };
+		0B257B992711C66200852D96 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B257B982711C66200852D96 /* MapController.swift */; };
 		0B257B9C2711C66200852D96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B257B9A2711C66200852D96 /* Main.storyboard */; };
 		0B257B9E2711C66500852D96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B257B9D2711C66500852D96 /* Assets.xcassets */; };
 		0B257BA12711C66500852D96 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B257B9F2711C66500852D96 /* LaunchScreen.storyboard */; };
@@ -17,6 +17,7 @@
 		0B257BB62711C66600852D96 /* LBTA_MapsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B257BB52711C66600852D96 /* LBTA_MapsUITests.swift */; };
 		0B257BB82711C66600852D96 /* LBTA_MapsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B257BB72711C66600852D96 /* LBTA_MapsUITestsLaunchTests.swift */; };
 		0B257BC92711C7C800852D96 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 0B257BC82711C7C800852D96 /* LBTATools */; };
+		0B5A335527143A2700467F4F /* MapPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5A335427143A2700467F4F /* MapPreview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +41,7 @@
 		0B257B912711C66200852D96 /* LBTA_Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LBTA_Maps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B257B942711C66200852D96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B257B962711C66200852D96 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		0B257B982711C66200852D96 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0B257B982711C66200852D96 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		0B257B9B2711C66200852D96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B257B9D2711C66500852D96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B257BA02711C66500852D96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -50,6 +51,7 @@
 		0B257BB12711C66600852D96 /* LBTA_MapsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LBTA_MapsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B257BB52711C66600852D96 /* LBTA_MapsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTA_MapsUITests.swift; sourceTree = "<group>"; };
 		0B257BB72711C66600852D96 /* LBTA_MapsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTA_MapsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0B5A335427143A2700467F4F /* MapPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +105,8 @@
 			children = (
 				0B257B942711C66200852D96 /* AppDelegate.swift */,
 				0B257B962711C66200852D96 /* SceneDelegate.swift */,
-				0B257B982711C66200852D96 /* ViewController.swift */,
+				0B257B982711C66200852D96 /* MapController.swift */,
+				0B5A335427143A2700467F4F /* MapPreview.swift */,
 				0B257B9A2711C66200852D96 /* Main.storyboard */,
 				0B257B9D2711C66500852D96 /* Assets.xcassets */,
 				0B257B9F2711C66500852D96 /* LaunchScreen.storyboard */,
@@ -266,9 +269,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B257B992711C66200852D96 /* ViewController.swift in Sources */,
+				0B257B992711C66200852D96 /* MapController.swift in Sources */,
 				0B257B952711C66200852D96 /* AppDelegate.swift in Sources */,
 				0B257B972711C66200852D96 /* SceneDelegate.swift in Sources */,
+				0B5A335527143A2700467F4F /* MapPreview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
