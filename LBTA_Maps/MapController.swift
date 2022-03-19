@@ -4,13 +4,13 @@ import LBTATools
 
 class MapController: UIViewController {
     let mapView = MKMapView()
-    let coordinate_SanFrancisco = CLLocationCoordinate2D(latitude: 37.7666, longitude: -122.427290)
+    let initialCoordinate = CLLocationCoordinate2D(latitude: 25.036151, longitude: 121.452080)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupRegion()
-        setupAnnotations()
+        findNearbyLandMark(term: "國中")
     }
     
     func setupUI() {
@@ -21,24 +21,56 @@ class MapController: UIViewController {
     
     func setupRegion() {
         let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005) //值越小, 地圖可以顯示越精細
-        let region = MKCoordinateRegion(center: coordinate_SanFrancisco, span: span)
+        let region = MKCoordinateRegion(center: initialCoordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
-
-    func setupAnnotations() {
-        let annotation1 = MKPointAnnotation()
-        annotation1.coordinate = coordinate_SanFrancisco
-        annotation1.title = "San Francisco"
-        annotation1.subtitle = "CA"
+    
+    func findNearbyLandMark(term: String) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = term
+        request.region = mapView.region
         
-        let coordinate_AppleCampus = CLLocationCoordinate2D(latitude: 37.3326, longitude: -122.030024)
-        let annotation2 = MKPointAnnotation()
-        annotation2.coordinate = coordinate_AppleCampus
-        annotation2.title = "Apple Campus"
-        annotation2.subtitle = "CA"
-        
-        mapView.addAnnotations([annotation1, annotation2])
-        mapView.showAnnotations(mapView.annotations, animated: true)
+        let localSearch = MKLocalSearch(request: request)
+        localSearch.start { response, error in
+            if let error = error {
+                print("Error - Find Nearby LandMark Fail:\(error)")
+                return
+            }
+            response?.mapItems.forEach { item in
+                let placemark = item.placemark
+                let addressString = self.getAddress(with: placemark)
+                print(addressString)
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = placemark.coordinate
+                annotation.title = item.name
+                self.mapView.addAnnotation(annotation)
+            }
+            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        }
+    }
+    
+    func getAddress(with placemark: MKPlacemark) -> String {
+        var addressString = ""
+        if let subThoroughfare = placemark.subThoroughfare {
+            addressString = subThoroughfare + " "
+        }
+        if let thoroughfare = placemark.thoroughfare {
+            addressString += thoroughfare + ", "
+        }
+        if let postalCode = placemark.postalCode {
+            addressString += postalCode + " "
+        }
+        if let locality = placemark.locality {
+            addressString += locality + ", "
+        }
+        if let administrativeArea = placemark.administrativeArea {
+            addressString += administrativeArea + " "
+        }
+        if let country = placemark.country {
+            addressString += country
+        }
+        return addressString
     }
 }
 
@@ -46,7 +78,7 @@ extension MapController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
         view.canShowCallout = true
-        view.image = UIImage(named: "tourist")
+//        view.image = UIImage(named: "tourist")
         return view
     }
 }
