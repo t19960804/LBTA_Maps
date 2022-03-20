@@ -10,6 +10,10 @@ class MapController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupRegion()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         findNearbyLandMark(term: "國中")
     }
     
