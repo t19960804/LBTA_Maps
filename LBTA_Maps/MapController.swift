@@ -42,8 +42,7 @@ class MapController: UIViewController {
             }
             response?.mapItems.forEach { item in
                 let placemark = item.placemark
-                let addressString = self.getAddress(with: placemark)
-                print(addressString)
+                print(placemark.addressString)
                 
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = placemark.coordinate
@@ -53,29 +52,6 @@ class MapController: UIViewController {
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
     }
-    
-    func getAddress(with placemark: MKPlacemark) -> String {
-        var addressString = ""
-        if let subThoroughfare = placemark.subThoroughfare {
-            addressString = subThoroughfare + " "
-        }
-        if let thoroughfare = placemark.thoroughfare {
-            addressString += thoroughfare + ", "
-        }
-        if let postalCode = placemark.postalCode {
-            addressString += postalCode + " "
-        }
-        if let locality = placemark.locality {
-            addressString += locality + ", "
-        }
-        if let administrativeArea = placemark.administrativeArea {
-            addressString += administrativeArea + " "
-        }
-        if let country = placemark.country {
-            addressString += country
-        }
-        return addressString
-    }
 }
 
 extension MapController: MKMapViewDelegate {
@@ -84,5 +60,30 @@ extension MapController: MKMapViewDelegate {
         view.canShowCallout = true
 //        view.image = UIImage(named: "tourist")
         return view
+    }
+}
+
+extension MKPlacemark {
+    var addressString: String {
+        var addressString = ""
+        if let subThoroughfare = subThoroughfare {
+            addressString = subThoroughfare + " "
+        }
+        if let thoroughfare = thoroughfare {
+            addressString += thoroughfare + ", "
+        }
+        if let postalCode = postalCode {
+            addressString += postalCode + " "
+        }
+        if let locality = locality {
+            addressString += locality + ", "
+        }
+        if let administrativeArea = administrativeArea {
+            addressString += administrativeArea + " "
+        }
+        if let country = country {
+            addressString += country
+        }
+        return addressString
     }
 }
