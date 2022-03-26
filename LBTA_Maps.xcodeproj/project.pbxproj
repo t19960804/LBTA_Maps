@@ -103,12 +103,12 @@
 		0B257B932711C66200852D96 /* LBTA_Maps */ = {
 			isa = PBXGroup;
 			children = (
-				0B257B942711C66200852D96 /* AppDelegate.swift */,
-				0B257B962711C66200852D96 /* SceneDelegate.swift */,
 				0B257B982711C66200852D96 /* MapController.swift */,
 				0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */,
 				0B5A335427143A2700467F4F /* MapPreview.swift */,
 				0B257B9D2711C66500852D96 /* Assets.xcassets */,
+				0B257B942711C66200852D96 /* AppDelegate.swift */,
+				0B257B962711C66200852D96 /* SceneDelegate.swift */,
 				0B257B9F2711C66500852D96 /* LaunchScreen.storyboard */,
 				0B257BA22711C66500852D96 /* Info.plist */,
 			);
