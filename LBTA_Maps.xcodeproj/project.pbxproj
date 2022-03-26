@@ -18,6 +18,7 @@
 		0B257BC92711C7C800852D96 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 0B257BC82711C7C800852D96 /* LBTATools */; };
 		0B5A335527143A2700467F4F /* MapPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5A335427143A2700467F4F /* MapPreview.swift */; };
 		0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */; };
+		0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16C27EF14B20013D3C3 /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		0B257BB72711C66600852D96 /* LBTA_MapsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTA_MapsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0B5A335427143A2700467F4F /* MapPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPreview.swift; sourceTree = "<group>"; };
 		0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
+		0B98D16C27EF14B20013D3C3 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				0B257B982711C66200852D96 /* MapController.swift */,
 				0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */,
 				0B5A335427143A2700467F4F /* MapPreview.swift */,
+				0B98D16C27EF14B20013D3C3 /* Extension.swift */,
 				0B257B9D2711C66500852D96 /* Assets.xcassets */,
 				0B257B942711C66200852D96 /* AppDelegate.swift */,
 				0B257B962711C66200852D96 /* SceneDelegate.swift */,
@@ -271,6 +274,7 @@
 				0B257B992711C66200852D96 /* MapController.swift in Sources */,
 				0B257B952711C66200852D96 /* AppDelegate.swift in Sources */,
 				0B257B972711C66200852D96 /* SceneDelegate.swift in Sources */,
+				0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */,
 				0B5A335527143A2700467F4F /* MapPreview.swift in Sources */,
 				0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */,
 			);

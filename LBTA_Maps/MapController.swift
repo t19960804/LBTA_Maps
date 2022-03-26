@@ -21,6 +21,17 @@ class MapController: UIViewController {
     private let initialCoordinate = CLLocationCoordinate2D(latitude: 25.036151, longitude: 121.452080)
 
     private var searchTextFieldSubscriber: AnyCancellable?
+    private var mapItems = [MKMapItem]()
+    private lazy var caroselView: UICollectionView = {
+        let layout = getCompositionalLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(CarouselCell.self, forCellWithReuseIdentifier: CarouselCell.cellId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        return collectionView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,15 +73,8 @@ class MapController: UIViewController {
     }
     
     private func setupCarouselView() {
-        let layout = getCompositionalLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(CarouselCell.self, forCellWithReuseIdentifier: CarouselCell.cellId)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        view.addSubview(collectionView)
-        collectionView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .zero, size: .init(width: 0, height: 150 * getVScale()))
+        view.addSubview(caroselView)
+        caroselView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .zero, size: .init(width: 0, height: 150 * getVScale()))
     }
     
     private func getCompositionalLayout() -> UICollectionViewLayout {
@@ -136,6 +140,9 @@ class MapController: UIViewController {
             }
             self.searchTextField.resignFirstResponder()
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+            self.mapItems = response?.mapItems ?? []
+            self.caroselView.reloadData()
+            self.caroselView.scrollToItem(at: [0,0], at: .left, animated: true)
         }
     }
 }
@@ -149,42 +156,18 @@ extension MapController: MKMapViewDelegate {
     }
 }
 
-extension MKPlacemark {
-    var addressString: String {
-        var addressString = ""
-        if let subThoroughfare = subThoroughfare {
-            addressString = subThoroughfare + " "
-        }
-        if let thoroughfare = thoroughfare {
-            addressString += thoroughfare + ", "
-        }
-        if let postalCode = postalCode {
-            addressString += postalCode + " "
-        }
-        if let locality = locality {
-            addressString += locality + ", "
-        }
-        if let administrativeArea = administrativeArea {
-            addressString += administrativeArea + " "
-        }
-        if let country = country {
-            addressString += country
-        }
-        return addressString
-    }
-}
-
 extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in _: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return mapItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselCell.cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselCell.cellId, for: indexPath) as! CarouselCell
+        cell.mapItem = mapItems[indexPath.item]
         return cell
     }
 }
