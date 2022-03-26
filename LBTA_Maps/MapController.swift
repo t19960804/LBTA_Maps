@@ -3,6 +3,17 @@ import MapKit
 import LBTATools
 import Combine
 
+func getHScale() -> CGFloat {
+    let screenSize = UIScreen.main.bounds
+    let width = screenSize.width
+    return width / 375
+}
+func getVScale() -> CGFloat {
+    let screenSize = UIScreen.main.bounds
+    let height = screenSize.height
+    return height / 667
+}
+
 class MapController: UIViewController {
     private let mapView = MKMapView()
     private let searchTextField = UITextField(placeholder: "Search Query")
@@ -42,12 +53,12 @@ class MapController: UIViewController {
     
     private func setupSearchBar() {
         let searchContainer = UIView(backgroundColor: .white)
-        searchContainer.layer.cornerRadius = 5
+        searchContainer.layer.cornerRadius = 5 * getHScale()
         view.addSubview(searchContainer)
-        searchContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 50))
+        searchContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16 * getHScale(), bottom: 0, right: 16 * getHScale()), size: .init(width: 0, height: 50 * getVScale()))
         
         searchContainer.addSubview(searchTextField)
-        searchTextField.anchor(top: searchContainer.topAnchor, leading: searchContainer.leadingAnchor, bottom: searchContainer.bottomAnchor, trailing: searchContainer.trailingAnchor, padding: .init(top: 8, left: 8, bottom: 8, right: 8), size: .init(width: 0, height: 0))
+        searchTextField.anchor(top: searchContainer.topAnchor, leading: searchContainer.leadingAnchor, bottom: searchContainer.bottomAnchor, trailing: searchContainer.trailingAnchor, padding: .init(top: 8 * getVScale(), left: 8 * getHScale(), bottom: 8 * getVScale(), right: 8 * getHScale()), size: .init(width: 0, height: 0))
     }
     
     private func setupCarouselView() {
@@ -59,7 +70,7 @@ class MapController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
-        collectionView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .zero, size: .init(width: 0, height: 150))
+        collectionView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .zero, size: .init(width: 0, height: 150 * getVScale()))
     }
     
     private func getCompositionalLayout() -> UICollectionViewLayout {
@@ -68,7 +79,7 @@ class MapController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                              heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 10)
+        item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 10 * getHScale())
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8),
                                               heightDimension: .fractionalHeight(1))
@@ -77,7 +88,7 @@ class MapController: UIViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 0)
+        section.contentInsets = .init(top: 0, leading: 16 * getHScale(), bottom: 0, trailing: 0)
         return UICollectionViewCompositionalLayout(section: section)
     }
     

@@ -6,7 +6,7 @@ class CarouselCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         backgroundColor = .white
-        layer.cornerRadius = 5
+        layer.cornerRadius = 5 * getHScale()
         layer.shadowOffset = .init(width: 2, height: 0)
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.2
