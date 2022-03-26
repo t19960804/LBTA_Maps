@@ -170,4 +170,14 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.mapItem = mapItems[indexPath.item]
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        mapView.annotations.forEach {
+            if $0.title == mapItems[indexPath.item].name {
+                mapView.selectAnnotation($0, animated: true)
+                collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+                return
+            }
+        }
+    }
 }
