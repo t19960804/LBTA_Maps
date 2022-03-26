@@ -10,10 +10,13 @@ class MapController: UIViewController {
     private let initialCoordinate = CLLocationCoordinate2D(latitude: 25.036151, longitude: 121.452080)
 
     private var searchTextFieldSubscriber: AnyCancellable?
-
+    private let cellId = "cellId"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupMapView()
+        setupSearchBar()
+        setupCarouselView()
         setupRegion()
     }
     
@@ -32,11 +35,13 @@ class MapController: UIViewController {
         searchTextFieldSubscriber?.cancel()
     }
     
-    private func setupUI() {
+    private func setupMapView() {
         view.addSubview(mapView)
         mapView.delegate = self
         mapView.fillSuperview()
-        
+    }
+    
+    private func setupSearchBar() {
         let searchContainer = UIView(backgroundColor: .white)
         searchContainer.layer.cornerRadius = 5
         searchContainer.layer.shadowOffset = .init(width: 0, height: 2)
@@ -48,6 +53,37 @@ class MapController: UIViewController {
         
         searchContainer.addSubview(searchTextField)
         searchTextField.anchor(top: searchContainer.topAnchor, leading: searchContainer.leadingAnchor, bottom: searchContainer.bottomAnchor, trailing: searchContainer.trailingAnchor, padding: .init(top: 8, left: 8, bottom: 8, right: 8), size: .init(width: 0, height: 0))
+    }
+    
+    private func setupCarouselView() {
+        let layout = getCompositionalLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        view.addSubview(collectionView)
+        collectionView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .zero, size: .init(width: 0, height: 150))
+    }
+    
+    private func getCompositionalLayout() -> UICollectionViewLayout {
+        // NSCollectionLayoutDimension 的 absolute 可指定固定的大小 ; fractional可指定相對於外層Container的比例大小
+        // NSCollectionLayoutGroup 的 horizontal 將讓 group 裡的 item 沿著水平方向排列
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                             heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 10)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8),
+                                              heightDimension: .fractionalHeight(1))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                         subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 0)
+        return UICollectionViewCompositionalLayout(section: section)
     }
     
     private func setupSearchTextFieldSubscriber() {
@@ -129,5 +165,21 @@ extension MKPlacemark {
             addressString += country
         }
         return addressString
+    }
+}
+
+extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in _: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        cell.backgroundColor = UIColor.blue
+        return cell
     }
 }
