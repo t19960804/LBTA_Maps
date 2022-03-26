@@ -10,7 +10,6 @@ class MapController: UIViewController {
     private let initialCoordinate = CLLocationCoordinate2D(latitude: 25.036151, longitude: 121.452080)
 
     private var searchTextFieldSubscriber: AnyCancellable?
-    private let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +43,6 @@ class MapController: UIViewController {
     private func setupSearchBar() {
         let searchContainer = UIView(backgroundColor: .white)
         searchContainer.layer.cornerRadius = 5
-        searchContainer.layer.shadowOffset = .init(width: 0, height: 2)
-        searchContainer.layer.shadowColor = UIColor.black.cgColor
-        searchContainer.layer.shadowOpacity = 0.5
-        searchContainer.layer.shadowRadius = 0.5
         view.addSubview(searchContainer)
         searchContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 50))
         
@@ -60,7 +55,7 @@ class MapController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(CarouselCell.self, forCellWithReuseIdentifier: CarouselCell.cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
@@ -178,8 +173,7 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = UIColor.blue
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CarouselCell.cellId, for: indexPath)
         return cell
     }
 }
