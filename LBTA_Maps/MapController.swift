@@ -18,8 +18,6 @@ class MapController: UIViewController {
     private let mapView = MKMapView()
     private let searchTextField = UITextField(placeholder: "Search Query")
 
-    private let initialCoordinate = CLLocationCoordinate2D(latitude: 25.036151, longitude: 121.452080)
-
     private var searchTextFieldSubscriber: AnyCancellable?
     private var mapItems = [MKMapItem]()
     private lazy var caroselView: UICollectionView = {
@@ -33,12 +31,14 @@ class MapController: UIViewController {
         return collectionView
     }()
     
+    private let locationManager = CLLocationManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        getUserLocation()
         setupMapView()
         setupSearchBar()
         setupCarouselView()
-        setupRegion()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +48,7 @@ class MapController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        findNearbyLandmark(term: "國中")
+        //findNearbyLandmark(term: "國中")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,9 +56,15 @@ class MapController: UIViewController {
         searchTextFieldSubscriber?.cancel()
     }
     
+    private func getUserLocation() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+    }
+    
     private func setupMapView() {
         view.addSubview(mapView)
         mapView.delegate = self
+        mapView.showsUserLocation = true
         mapView.fillSuperview()
     }
     
@@ -111,12 +117,6 @@ class MapController: UIViewController {
             }
     }
     
-    private func setupRegion() {
-        let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005) //值越小, 地圖可以顯示越精細
-        let region = MKCoordinateRegion(center: initialCoordinate, span: span)
-        mapView.setRegion(region, animated: true)
-    }
-    
     private func findNearbyLandmark(term: String) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = term
@@ -149,10 +149,12 @@ class MapController: UIViewController {
 
 extension MapController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
-        view.canShowCallout = true
-//        view.image = UIImage(named: "tourist")
-        return view
+        if annotation is MKPointAnnotation {
+            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
+            view.canShowCallout = true
+            return view
+        }
+        return nil
     }
 }
 
@@ -179,5 +181,33 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
                 return
             }
         }
+    }
+}
+
+extension MapController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let accuracy = manager.accuracyAuthorization // iOS 14 為 CoreLocation 框架帶來了一點改變，使用者可以選擇要給予準確或大概的位置存取。
+        print("Authorization DidChange accuracy:\(accuracy.rawValue), status:\(manager.authorizationStatus.rawValue)")
+        switch manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse, .restricted:
+            // Get Coordinate Of User
+            locationManager.startUpdatingLocation()
+        case .denied:
+            break
+        case .notDetermined:
+            break
+        @unknown default:
+            fatalError()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let firstLocation = locations.first else {
+            return
+        }
+        let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+        let region = MKCoordinateRegion(center: firstLocation.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+        locationManager.stopUpdatingLocation() // Save Battrey Power
     }
 }
