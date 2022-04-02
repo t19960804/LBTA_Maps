@@ -133,9 +133,10 @@ class MapController: UIViewController {
                 let placemark = item.placemark
                 print(placemark.addressString)
                 
-                let annotation = MKPointAnnotation()
+                let annotation = CustomAnnotation()
                 annotation.coordinate = placemark.coordinate
-                annotation.title = item.name
+                annotation.title = "地點:\(item.name ?? "未知")"
+                annotation.mapItem = item
                 self.mapView.addAnnotation(annotation)
             }
             self.searchTextField.resignFirstResponder()
@@ -158,8 +159,8 @@ extension MapController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let title = view.annotation?.title
-        if let index = mapItems.firstIndex(where: { $0.name == title }) {
+        guard let customAnnotation = view.annotation as? CustomAnnotation else { return }
+        if let index = mapItems.firstIndex(where: { $0.name == customAnnotation.mapItem?.name }) {
             caroselView.scrollToItem(at: IndexPath(item: index, section: 0), at: .left, animated: true)
         }
     }
@@ -182,7 +183,8 @@ extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         mapView.annotations.forEach {
-            if $0.title == mapItems[indexPath.item].name {
+            guard let customAnnotation = $0 as? CustomAnnotation else { return }
+            if customAnnotation.mapItem?.name == mapItems[indexPath.item].name {
                 mapView.selectAnnotation($0, animated: true)
                 collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
                 return
