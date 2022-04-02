@@ -156,6 +156,13 @@ extension MapController: MKMapViewDelegate {
         }
         return nil
     }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let title = view.annotation?.title
+        if let index = mapItems.firstIndex(where: { $0.name == title }) {
+            caroselView.scrollToItem(at: IndexPath(item: index, section: 0), at: .left, animated: true)
+        }
+    }
 }
 
 extension MapController: UICollectionViewDelegate, UICollectionViewDataSource {
