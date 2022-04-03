@@ -20,6 +20,7 @@
 		0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */; };
 		0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16C27EF14B20013D3C3 /* Extension.swift */; };
 		0B98D16F27F848550013D3C3 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16E27F848550013D3C3 /* CustomAnnotation.swift */; };
+		0B98D17327F9A8E70013D3C3 /* DirectionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D17227F9A8E70013D3C3 /* DirectionsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
 		0B98D16C27EF14B20013D3C3 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		0B98D16E27F848550013D3C3 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		0B98D17227F9A8E70013D3C3 /* DirectionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		0B257B932711C66200852D96 /* LBTA_Maps */ = {
 			isa = PBXGroup;
 			children = (
+				0B98D17127F9A8C60013D3C3 /* Directions */,
 				0B98D17027F84A7E0013D3C3 /* View */,
 				0B257B982711C66200852D96 /* MapController.swift */,
 				0B5A335427143A2700467F4F /* MapPreview.swift */,
@@ -144,6 +147,14 @@
 				0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		0B98D17127F9A8C60013D3C3 /* Directions */ = {
+			isa = PBXGroup;
+			children = (
+				0B98D17227F9A8E70013D3C3 /* DirectionsVC.swift */,
+			);
+			path = Directions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +295,7 @@
 			files = (
 				0B257B992711C66200852D96 /* MapController.swift in Sources */,
 				0B257B952711C66200852D96 /* AppDelegate.swift in Sources */,
+				0B98D17327F9A8E70013D3C3 /* DirectionsVC.swift in Sources */,
 				0B257B972711C66200852D96 /* SceneDelegate.swift in Sources */,
 				0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */,
 				0B5A335527143A2700467F4F /* MapPreview.swift in Sources */,
