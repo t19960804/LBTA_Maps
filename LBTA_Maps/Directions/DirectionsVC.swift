@@ -15,6 +15,7 @@ class DirectionsVC: UIViewController {
         setupNavBar()
         setupMapView()
         setupStartEndAnnotations()
+        requestRoute()
     }
     
     private func getUserLocation() {
@@ -31,6 +32,7 @@ class DirectionsVC: UIViewController {
     }
     
     private func setupMapView() {
+        mapView.delegate = self
         view.addSubview(mapView)
         mapView.anchor(top: navBarView.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
     }
@@ -46,6 +48,32 @@ class DirectionsVC: UIViewController {
         
         mapView.addAnnotations([startAnnotation, endAnnotation])
         mapView.showAnnotations(mapView.annotations, animated: true) //如果span值太小, 導致地圖太精細, showAnnotations會沒作用, 因為無法要求地圖在精細的情況下又要顯示所有Annotations
+    }
+    
+    private func requestRoute() {
+        let request = MKDirections.Request()
+        
+        let startPlacemark = MKPlacemark(coordinate: .init(latitude: 25.03624844630123, longitude: 121.45272364546625))
+        request.source = MKMapItem(placemark: startPlacemark)
+        
+        let endPlacemark = MKPlacemark(coordinate: .init(latitude: 25.051814842654544, longitude: 121.45680279149116))
+        request.destination = MKMapItem(placemark: endPlacemark)
+        
+        request.requestsAlternateRoutes = true
+        request.transportType = .walking
+        let directions = MKDirections(request: request)
+        directions.calculate { response, error in
+            if let error = error {
+                print("Error - Calculate directions failed:\(error)")
+                return
+            }
+            print("Info - Success calculate routes")
+//            guard let route = response?.routes.first else { return }
+//            print(route.expectedTravelTime / 3600)
+            response?.routes.forEach{ route in
+                self.mapView.addOverlay(route.polyline)
+            }
+        }
     }
 }
 
@@ -95,5 +123,14 @@ extension DirectionsVC: CLLocationManagerDelegate {
         let region = MKCoordinateRegion(center: firstLocation.coordinate, span: span)
         mapView.setRegion(region, animated: true)
         locationManager.stopUpdatingLocation() // Save Battrey Power
+    }
+}
+
+extension DirectionsVC: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor(red: 51/255, green: 153/255, blue: 1, alpha: 1)
+        renderer.lineWidth = 5
+        return renderer
     }
 }
