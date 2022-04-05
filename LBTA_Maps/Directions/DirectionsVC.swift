@@ -11,6 +11,7 @@ class DirectionsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = true
         getUserLocation()
         setupNavBar()
         setupMapView()
@@ -29,6 +30,75 @@ class DirectionsVC: UIViewController {
         navBarView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -100 * getVScale(), right: 0))
         navBarView.backgroundColor = UIColor(red: 51/255, green: 153/255, blue: 1, alpha: 1)
         navBarView.setupShadow(opacity: 0.5, radius: 5)
+        
+        let startImageView = UIImageView(image: UIImage(named: "start_location_circles"))
+        startImageView.contentMode = .scaleAspectFit
+        startImageView.translatesAutoresizingMaskIntoConstraints = false
+        navBarView.addSubview(startImageView)
+        NSLayoutConstraint.activate([
+            startImageView.heightAnchor.constraint(equalToConstant: 20 * getVScale()),
+            startImageView.widthAnchor.constraint(equalToConstant: 20 * getHScale()),
+            startImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15 * getVScale()),
+            startImageView.leadingAnchor.constraint(equalTo: navBarView.leadingAnchor, constant: 20 * getHScale())
+        ])
+        
+        let startTap = UITapGestureRecognizer(target: self, action: #selector(handleTapTextField))
+        let startTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
+        startTextField.attributedPlaceholder = .init(string: "Start", attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
+        startTextField.textColor = .white
+        startTextField.translatesAutoresizingMaskIntoConstraints = false
+        startTextField.backgroundColor = UIColor(white: 1, alpha: 0.3)
+        startTextField.addGestureRecognizer(startTap)
+        navBarView.addSubview(startTextField)
+        NSLayoutConstraint.activate([
+            startTextField.heightAnchor.constraint(equalToConstant: 34 * getVScale()),
+            startTextField.trailingAnchor.constraint(equalTo: navBarView.trailingAnchor, constant: -20 * getHScale()),
+            startTextField.centerYAnchor.constraint(equalTo: startImageView.centerYAnchor),
+            startTextField.leadingAnchor.constraint(equalTo: startImageView.trailingAnchor, constant: 20 * getHScale())
+        ])
+        
+        let endImageView = UIImageView(image: UIImage(named: "annotation_icon")?.withRenderingMode(.alwaysTemplate))
+        endImageView.tintColor = .white
+        endImageView.contentMode = .scaleAspectFit
+        endImageView.translatesAutoresizingMaskIntoConstraints = false
+        navBarView.addSubview(endImageView)
+        NSLayoutConstraint.activate([
+            endImageView.heightAnchor.constraint(equalToConstant: 20 * getVScale()),
+            endImageView.widthAnchor.constraint(equalToConstant: 20 * getHScale()),
+            endImageView.topAnchor.constraint(equalTo: startImageView.bottomAnchor, constant: 25 * getVScale()),
+            endImageView.leadingAnchor.constraint(equalTo: startImageView.leadingAnchor)
+        ])
+        
+        let endTap = UITapGestureRecognizer(target: self, action: #selector(handleTapTextField))
+        let endTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
+        endTextField.attributedPlaceholder = .init(string: "End", attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
+        endTextField.textColor = .white
+        endTextField.translatesAutoresizingMaskIntoConstraints = false
+        endTextField.backgroundColor = UIColor(white: 1, alpha: 0.3)
+        endTextField.addGestureRecognizer(endTap)
+        navBarView.addSubview(endTextField)
+        NSLayoutConstraint.activate([
+            endTextField.heightAnchor.constraint(equalTo: startTextField.heightAnchor),
+            endTextField.trailingAnchor.constraint(equalTo: startTextField.trailingAnchor),
+            endTextField.centerYAnchor.constraint(equalTo: endImageView.centerYAnchor),
+            endTextField.leadingAnchor.constraint(equalTo: startTextField.leadingAnchor)
+        ])
+    }
+    
+    @objc private func handleTapTextField() {
+        let vc = UIViewController()
+        vc.view.backgroundColor = .yellow
+        
+        // temp hack
+        let button = UIButton(title: "BACK", titleColor: .black, font: .boldSystemFont(ofSize: 14), backgroundColor: .clear, target: self, action: #selector(handleBack))
+        vc.view.addSubview(button)
+        button.fillSuperview()
+        
+        navigationController!.pushViewController(vc, animated: true)
+    }
+    
+    @objc func handleBack() {
+        navigationController?.popViewController(animated: true)
     }
     
     private func setupMapView() {
