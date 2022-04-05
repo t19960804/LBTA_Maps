@@ -42,7 +42,7 @@ class DirectionsVC: UIViewController {
             startImageView.leadingAnchor.constraint(equalTo: navBarView.leadingAnchor, constant: 20 * getHScale())
         ])
         
-        let startTap = UITapGestureRecognizer(target: self, action: #selector(handleTapTextField))
+        let startTap = UITapGestureRecognizer(target: self, action: #selector(handleTapTextField)) //不可以兩個TextField使用同一個Tap, 所以要分Start / EndTap
         let startTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
         startTextField.attributedPlaceholder = .init(string: "Start", attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
         startTextField.textColor = .white
