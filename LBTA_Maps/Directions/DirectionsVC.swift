@@ -8,6 +8,8 @@ class DirectionsVC: UIViewController {
 
     private let navBarView = UIView()
     private let mapView = MKMapView()
+    private let startTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
+    private let endTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +44,7 @@ class DirectionsVC: UIViewController {
             startImageView.leadingAnchor.constraint(equalTo: navBarView.leadingAnchor, constant: 20 * getHScale())
         ])
         
-        let startTap = UITapGestureRecognizer(target: self, action: #selector(handleTapTextField)) //不可以兩個TextField使用同一個Tap, 所以要分Start / EndTap
-        let startTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
+        let startTap = UITapGestureRecognizer(target: self, action: #selector(handleTapStartTextField)) //不可以兩個TextField使用同一個Tap, 所以要分Start / EndTap
         startTextField.attributedPlaceholder = .init(string: "Start", attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
         startTextField.textColor = .white
         startTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -69,8 +70,7 @@ class DirectionsVC: UIViewController {
             endImageView.leadingAnchor.constraint(equalTo: startImageView.leadingAnchor)
         ])
         
-        let endTap = UITapGestureRecognizer(target: self, action: #selector(handleTapTextField))
-        let endTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
+        let endTap = UITapGestureRecognizer(target: self, action: #selector(handleTapEndTextField))
         endTextField.attributedPlaceholder = .init(string: "End", attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.7)])
         endTextField.textColor = .white
         endTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -85,15 +85,19 @@ class DirectionsVC: UIViewController {
         ])
     }
     
-    @objc private func handleTapTextField() {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .yellow
-        
-        // temp hack
-        let button = UIButton(title: "BACK", titleColor: .black, font: .boldSystemFont(ofSize: 14), backgroundColor: .clear, target: self, action: #selector(handleBack))
-        vc.view.addSubview(button)
-        button.fillSuperview()
-        
+    @objc private func handleTapStartTextField() {
+        let vc = LocationSearchVC()
+        vc.selectLocationHandler = { mapItem in
+            self.startTextField.text = mapItem.name
+        }
+        navigationController!.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func handleTapEndTextField() {
+        let vc = LocationSearchVC()
+        vc.selectLocationHandler = { mapItem in
+            self.endTextField.text = mapItem.name
+        }
         navigationController!.pushViewController(vc, animated: true)
     }
     

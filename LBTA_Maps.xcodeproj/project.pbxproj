@@ -21,6 +21,8 @@
 		0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16C27EF14B20013D3C3 /* Extension.swift */; };
 		0B98D16F27F848550013D3C3 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16E27F848550013D3C3 /* CustomAnnotation.swift */; };
 		0B98D17327F9A8E70013D3C3 /* DirectionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D17227F9A8E70013D3C3 /* DirectionsVC.swift */; };
+		0B98D178280195A60013D3C3 /* LocationSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D177280195A60013D3C3 /* LocationSearchVC.swift */; };
+		0B98D17A2801A2E70013D3C3 /* LocationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D1792801A2E70013D3C3 /* LocationSearchCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		0B98D16C27EF14B20013D3C3 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		0B98D16E27F848550013D3C3 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		0B98D17227F9A8E70013D3C3 /* DirectionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsVC.swift; sourceTree = "<group>"; };
+		0B98D177280195A60013D3C3 /* LocationSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchVC.swift; sourceTree = "<group>"; };
+		0B98D1792801A2E70013D3C3 /* LocationSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				0B98D17227F9A8E70013D3C3 /* DirectionsVC.swift */,
+				0B98D177280195A60013D3C3 /* LocationSearchVC.swift */,
+				0B98D1792801A2E70013D3C3 /* LocationSearchCell.swift */,
 			);
 			path = Directions;
 			sourceTree = "<group>";
@@ -299,6 +305,8 @@
 				0B257B972711C66200852D96 /* SceneDelegate.swift in Sources */,
 				0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */,
 				0B5A335527143A2700467F4F /* MapPreview.swift in Sources */,
+				0B98D17A2801A2E70013D3C3 /* LocationSearchCell.swift in Sources */,
+				0B98D178280195A60013D3C3 /* LocationSearchVC.swift in Sources */,
 				0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */,
 				0B98D16F27F848550013D3C3 /* CustomAnnotation.swift in Sources */,
 			);
