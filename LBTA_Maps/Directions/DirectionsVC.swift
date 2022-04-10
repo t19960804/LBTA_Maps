@@ -2,6 +2,7 @@ import UIKit
 import SwiftUI
 import MapKit
 import LBTATools
+import JGProgressHUD
 
 class DirectionsVC: UIViewController {
     private let locationManager = CLLocationManager()
@@ -11,14 +12,15 @@ class DirectionsVC: UIViewController {
     private let startTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
     private let endTextField = IndentedTextField(placeholder: "", padding: 12 * getHScale(), cornerRadius: 5)
     
+    private var startMapItem: MKMapItem?
+    private var endMapItem: MKMapItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         getUserLocation()
         setupNavBar()
         setupMapView()
-        setupStartEndAnnotations()
-        requestRoute()
     }
     
     private func getUserLocation() {
@@ -88,7 +90,12 @@ class DirectionsVC: UIViewController {
     @objc private func handleTapStartTextField() {
         let vc = LocationSearchVC(term: startTextField.text ?? "")
         vc.selectLocationHandler = { mapItem in
+            if let previousMapItem = self.startMapItem {
+                self.removeAnnotationFromMap(item: previousMapItem)
+            }
+            self.startMapItem = mapItem
             self.startTextField.text = mapItem.name
+            self.addAnnotationAndRequestRoute(item: self.startMapItem!)
         }
         navigationController!.pushViewController(vc, animated: true)
     }
@@ -96,9 +103,33 @@ class DirectionsVC: UIViewController {
     @objc private func handleTapEndTextField() {
         let vc = LocationSearchVC(term: endTextField.text ?? "")
         vc.selectLocationHandler = { mapItem in
+            if let previousMapItem = self.endMapItem {
+                self.removeAnnotationFromMap(item: previousMapItem)
+            }
+            self.endMapItem = mapItem
             self.endTextField.text = mapItem.name
+            self.addAnnotationAndRequestRoute(item: self.endMapItem!)
         }
         navigationController!.pushViewController(vc, animated: true)
+    }
+    
+    private func removeAnnotationFromMap(item: MKMapItem) {
+        for annotation in mapView.annotations {
+            if annotation.title == item.name {
+                mapView.removeAnnotation(annotation)
+                mapView.removeOverlays(mapView.overlays)
+                break
+            }
+        }
+    }
+    
+    private func addAnnotationAndRequestRoute(item: MKMapItem) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = item.placemark.coordinate
+        annotation.title = item.name
+        mapView.addAnnotation(annotation)
+        mapView.showAnnotations(mapView.annotations, animated: true)
+        requestRoute()
     }
     
     @objc func handleBack() {
@@ -111,42 +142,41 @@ class DirectionsVC: UIViewController {
         mapView.anchor(top: navBarView.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
     }
     
-    private func setupStartEndAnnotations() {
-        let startAnnotation = MKPointAnnotation()
-        startAnnotation.coordinate = .init(latitude: 25.03624844630123, longitude: 121.45272364546625)
-        startAnnotation.title = "新莊國中"
-        
-        let endAnnotation = MKPointAnnotation()
-        endAnnotation.coordinate = .init(latitude: 25.051814842654544, longitude: 121.45680279149116)
-        endAnnotation.title = "昌隆國小"
-        
-        mapView.addAnnotations([startAnnotation, endAnnotation])
-        mapView.showAnnotations(mapView.annotations, animated: true) //如果span值太小, 導致地圖太精細, showAnnotations會沒作用, 因為無法要求地圖在精細的情況下又要顯示所有Annotations
-    }
-    
     private func requestRoute() {
+        guard let startMapItem = self.startMapItem,
+              let endMapItem = self.endMapItem else {
+            print("Error - There is no two locations to request route")
+            return
+        }
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Routing..."
+        hud.show(in: view, animated: true)
+        
         let request = MKDirections.Request()
-        
-        let startPlacemark = MKPlacemark(coordinate: .init(latitude: 25.03624844630123, longitude: 121.45272364546625))
-        request.source = MKMapItem(placemark: startPlacemark)
-        
-        let endPlacemark = MKPlacemark(coordinate: .init(latitude: 25.051814842654544, longitude: 121.45680279149116))
-        request.destination = MKMapItem(placemark: endPlacemark)
-        
+        request.source = startMapItem
+        request.destination = endMapItem
         request.requestsAlternateRoutes = true
         request.transportType = .walking
         let directions = MKDirections(request: request)
         directions.calculate { response, error in
             if let error = error {
                 print("Error - Calculate directions failed:\(error)")
+                hud.indicatorView = JGProgressHUDErrorIndicatorView()
+                hud.textLabel.text = "Routing Failed!"
+                hud.detailTextLabel.text = error.localizedDescription
+                hud.dismiss(afterDelay: 2, animated: true)
                 return
             }
             print("Info - Success calculate routes")
-//            guard let route = response?.routes.first else { return }
-//            print(route.expectedTravelTime / 3600)
-            response?.routes.forEach{ route in
+            // Multiple Routes
+//            response?.routes.forEach{ route in
+//                self.mapView.addOverlay(route.polyline)
+//            }
+            // Single Route
+            if let route = response?.routes.first {
                 self.mapView.addOverlay(route.polyline)
             }
+            hud.dismiss(animated: true)
         }
     }
 }
@@ -193,6 +223,7 @@ extension DirectionsVC: CLLocationManagerDelegate {
         guard let firstLocation = locations.first else {
             return
         }
+        //如果span值太小, 導致地圖太精細, showAnnotations會沒作用, 因為無法要求地圖在精細的情況下又要顯示所有Annotations
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: firstLocation.coordinate, span: span)
         mapView.setRegion(region, animated: true)

@@ -64,6 +64,7 @@ class LocationSearchVC: UIViewController {
         searchTextField.text = term
         searchTextField.layer.borderColor = UIColor.lightGray.cgColor
         searchTextField.layer.borderWidth = 1
+        searchTextField.becomeFirstResponder()
         headerContainer.addSubview(searchTextField)
         NSLayoutConstraint.activate([
             searchTextField.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
