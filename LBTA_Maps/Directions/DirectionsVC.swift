@@ -86,7 +86,7 @@ class DirectionsVC: UIViewController {
     }
     
     @objc private func handleTapStartTextField() {
-        let vc = LocationSearchVC()
+        let vc = LocationSearchVC(term: startTextField.text ?? "")
         vc.selectLocationHandler = { mapItem in
             self.startTextField.text = mapItem.name
         }
@@ -94,7 +94,7 @@ class DirectionsVC: UIViewController {
     }
     
     @objc private func handleTapEndTextField() {
-        let vc = LocationSearchVC()
+        let vc = LocationSearchVC(term: endTextField.text ?? "")
         vc.selectLocationHandler = { mapItem in
             self.endTextField.text = mapItem.name
         }
