@@ -81,6 +81,11 @@ class LocationSearchVC: UIViewController {
     
     private func setupSearchTextFieldSubscriber() {
         let publisher = NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: searchTextField)
+//        變數的生命週期是指其存在於記憶體內的時間，其生命週期如下：
+//        區域變數(local variables)，從其宣告開始至函式結束為止。
+//        全域變數(global variables)，從程式開始到程式結束為止。
+//        如果沒有使用全域變數來參考pulisher, publisher會在function執行完就被釋放
+//        參考: https://junwu.nptu.edu.tw/dokuwiki/doku.php?id=c:lifetimescope
         searchTextFieldSubscriber = publisher
             .map { ($0.object as? UITextField)?.text ?? "" }
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
