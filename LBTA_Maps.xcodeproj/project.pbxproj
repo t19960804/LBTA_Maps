@@ -24,6 +24,8 @@
 		0B98D178280195A60013D3C3 /* LocationSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D177280195A60013D3C3 /* LocationSearchVC.swift */; };
 		0B98D17A2801A2E70013D3C3 /* LocationSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D1792801A2E70013D3C3 /* LocationSearchCell.swift */; };
 		0B98D17D2802D5D00013D3C3 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 0B98D17C2802D5D00013D3C3 /* JGProgressHUD */; };
+		0B98D17F280AC60F0013D3C3 /* RouteStepsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D17E280AC60F0013D3C3 /* RouteStepsVC.swift */; };
+		0B98D181280AC91C0013D3C3 /* RouteStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		0B98D17227F9A8E70013D3C3 /* DirectionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsVC.swift; sourceTree = "<group>"; };
 		0B98D177280195A60013D3C3 /* LocationSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchVC.swift; sourceTree = "<group>"; };
 		0B98D1792801A2E70013D3C3 /* LocationSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
+		0B98D17E280AC60F0013D3C3 /* RouteStepsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepsVC.swift; sourceTree = "<group>"; };
+		0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +165,8 @@
 				0B98D17227F9A8E70013D3C3 /* DirectionsVC.swift */,
 				0B98D177280195A60013D3C3 /* LocationSearchVC.swift */,
 				0B98D1792801A2E70013D3C3 /* LocationSearchCell.swift */,
+				0B98D17E280AC60F0013D3C3 /* RouteStepsVC.swift */,
+				0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */,
 			);
 			path = Directions;
 			sourceTree = "<group>";
@@ -309,8 +315,10 @@
 				0B257B972711C66200852D96 /* SceneDelegate.swift in Sources */,
 				0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */,
 				0B5A335527143A2700467F4F /* MapPreview.swift in Sources */,
+				0B98D17F280AC60F0013D3C3 /* RouteStepsVC.swift in Sources */,
 				0B98D17A2801A2E70013D3C3 /* LocationSearchCell.swift in Sources */,
 				0B98D178280195A60013D3C3 /* LocationSearchVC.swift in Sources */,
+				0B98D181280AC91C0013D3C3 /* RouteStepCell.swift in Sources */,
 				0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */,
 				0B98D16F27F848550013D3C3 /* CustomAnnotation.swift in Sources */,
 			);

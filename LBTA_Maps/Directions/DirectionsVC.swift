@@ -14,6 +14,7 @@ class DirectionsVC: UIViewController {
     
     private var startMapItem: MKMapItem?
     private var endMapItem: MKMapItem?
+    private var currentRoute: MKRoute?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class DirectionsVC: UIViewController {
         getUserLocation()
         setupNavBar()
         setupMapView()
+        setupRouteButton()
     }
     
     private func getUserLocation() {
@@ -142,6 +144,21 @@ class DirectionsVC: UIViewController {
         mapView.anchor(top: navBarView.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
     }
     
+    private func setupRouteButton() {
+        let routeButton = UIButton(title: "Route", titleColor: .black, font: .boldSystemFont(ofSize: 15 * getHScale()), backgroundColor: .white, target: self, action: #selector(presentRouteStepsVC))
+        mapView.addSubview(routeButton)
+        routeButton.anchor(top: nil, leading: mapView.leadingAnchor, bottom: mapView.bottomAnchor, trailing: mapView.trailingAnchor, padding: .init(top: 0, left: 10 * getHScale(), bottom: 10 * getHScale(), right: 10 * getHScale()), size: .init(width: 0, height: 50))
+    }
+    
+    @objc private func presentRouteStepsVC() {
+        guard let currentRoute = currentRoute else {
+            print("Error - currentRoute is nil")
+            return
+        }
+        let vc = RouteStepsVC(route: currentRoute)
+        present(vc, animated: true)
+    }
+    
     private func requestRoute() {
         guard let startMapItem = self.startMapItem,
               let endMapItem = self.endMapItem else {
@@ -175,6 +192,7 @@ class DirectionsVC: UIViewController {
             // Single Route
             if let route = response?.routes.first {
                 self.mapView.addOverlay(route.polyline)
+                self.currentRoute = route
             }
             hud.dismiss(animated: true)
         }
