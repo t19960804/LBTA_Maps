@@ -26,6 +26,7 @@
 		0B98D17D2802D5D00013D3C3 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 0B98D17C2802D5D00013D3C3 /* JGProgressHUD */; };
 		0B98D17F280AC60F0013D3C3 /* RouteStepsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D17E280AC60F0013D3C3 /* RouteStepsVC.swift */; };
 		0B98D181280AC91C0013D3C3 /* RouteStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */; };
+		0B98D186280C00440013D3C3 /* RouteStepHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D185280C00430013D3C3 /* RouteStepHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		0B98D1792801A2E70013D3C3 /* LocationSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchCell.swift; sourceTree = "<group>"; };
 		0B98D17E280AC60F0013D3C3 /* RouteStepsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepsVC.swift; sourceTree = "<group>"; };
 		0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepCell.swift; sourceTree = "<group>"; };
+		0B98D185280C00430013D3C3 /* RouteStepHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 				0B98D1792801A2E70013D3C3 /* LocationSearchCell.swift */,
 				0B98D17E280AC60F0013D3C3 /* RouteStepsVC.swift */,
 				0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */,
+				0B98D185280C00430013D3C3 /* RouteStepHeader.swift */,
 			);
 			path = Directions;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				0B98D178280195A60013D3C3 /* LocationSearchVC.swift in Sources */,
 				0B98D181280AC91C0013D3C3 /* RouteStepCell.swift in Sources */,
 				0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */,
+				0B98D186280C00440013D3C3 /* RouteStepHeader.swift in Sources */,
 				0B98D16F27F848550013D3C3 /* CustomAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
