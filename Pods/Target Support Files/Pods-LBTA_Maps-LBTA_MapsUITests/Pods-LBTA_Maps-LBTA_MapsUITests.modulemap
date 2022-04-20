@@ -1,0 +1,6 @@
+framework module Pods_LBTA_Maps_LBTA_MapsUITests {
+  umbrella header "Pods-LBTA_Maps-LBTA_MapsUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

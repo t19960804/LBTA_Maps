@@ -27,6 +27,10 @@
 		0B98D17F280AC60F0013D3C3 /* RouteStepsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D17E280AC60F0013D3C3 /* RouteStepsVC.swift */; };
 		0B98D181280AC91C0013D3C3 /* RouteStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */; };
 		0B98D186280C00440013D3C3 /* RouteStepHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D185280C00430013D3C3 /* RouteStepHeader.swift */; };
+		0B98D1892810060A0013D3C3 /* PlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D1882810060A0013D3C3 /* PlacesController.swift */; };
+		78FE9F34ABEE11F1A1DC5826 /* Pods_LBTA_Maps_LBTA_MapsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CF1AFEA64D08D7CA4C585C /* Pods_LBTA_Maps_LBTA_MapsUITests.framework */; };
+		7C7B2E7C9DDC64EF99009347 /* Pods_LBTA_MapsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A5F4BC208443432F848FA2 /* Pods_LBTA_MapsTests.framework */; };
+		EAB00ACE0F68FC520BE75685 /* Pods_LBTA_Maps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E836609D1340DCCF16893F43 /* Pods_LBTA_Maps.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02A5F4BC208443432F848FA2 /* Pods_LBTA_MapsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LBTA_MapsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B257B912711C66200852D96 /* LBTA_Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LBTA_Maps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B257B942711C66200852D96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B257B962711C66200852D96 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +74,15 @@
 		0B98D17E280AC60F0013D3C3 /* RouteStepsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepsVC.swift; sourceTree = "<group>"; };
 		0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepCell.swift; sourceTree = "<group>"; };
 		0B98D185280C00430013D3C3 /* RouteStepHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepHeader.swift; sourceTree = "<group>"; };
+		0B98D1882810060A0013D3C3 /* PlacesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesController.swift; sourceTree = "<group>"; };
+		1C58860CF4B76E4F70407CBC /* Pods-LBTA_Maps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LBTA_Maps.debug.xcconfig"; path = "Target Support Files/Pods-LBTA_Maps/Pods-LBTA_Maps.debug.xcconfig"; sourceTree = "<group>"; };
+		23CF1AFEA64D08D7CA4C585C /* Pods_LBTA_Maps_LBTA_MapsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LBTA_Maps_LBTA_MapsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4064AC516CEC9280D43B5AD1 /* Pods-LBTA_MapsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LBTA_MapsTests.release.xcconfig"; path = "Target Support Files/Pods-LBTA_MapsTests/Pods-LBTA_MapsTests.release.xcconfig"; sourceTree = "<group>"; };
+		65649A47E36A800B08716736 /* Pods-LBTA_Maps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LBTA_Maps.release.xcconfig"; path = "Target Support Files/Pods-LBTA_Maps/Pods-LBTA_Maps.release.xcconfig"; sourceTree = "<group>"; };
+		AF5117D8153199681D0914E9 /* Pods-LBTA_MapsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LBTA_MapsTests.debug.xcconfig"; path = "Target Support Files/Pods-LBTA_MapsTests/Pods-LBTA_MapsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D02ED0085D2F398055D8F4CD /* Pods-LBTA_Maps-LBTA_MapsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LBTA_Maps-LBTA_MapsUITests.release.xcconfig"; path = "Target Support Files/Pods-LBTA_Maps-LBTA_MapsUITests/Pods-LBTA_Maps-LBTA_MapsUITests.release.xcconfig"; sourceTree = "<group>"; };
+		DA2A98C012C0D5BF95B1018E /* Pods-LBTA_Maps-LBTA_MapsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LBTA_Maps-LBTA_MapsUITests.debug.xcconfig"; path = "Target Support Files/Pods-LBTA_Maps-LBTA_MapsUITests/Pods-LBTA_Maps-LBTA_MapsUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E836609D1340DCCF16893F43 /* Pods_LBTA_Maps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LBTA_Maps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +92,7 @@
 			files = (
 				0B98D17D2802D5D00013D3C3 /* JGProgressHUD in Frameworks */,
 				0B257BC92711C7C800852D96 /* LBTATools in Frameworks */,
+				EAB00ACE0F68FC520BE75685 /* Pods_LBTA_Maps.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C7B2E7C9DDC64EF99009347 /* Pods_LBTA_MapsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78FE9F34ABEE11F1A1DC5826 /* Pods_LBTA_Maps_LBTA_MapsUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +122,8 @@
 				0B257BAA2711C66600852D96 /* LBTA_MapsTests */,
 				0B257BB42711C66600852D96 /* LBTA_MapsUITests */,
 				0B257B922711C66200852D96 /* Products */,
+				E8E5D71E51F140DE51CF4634 /* Pods */,
+				9259F9F2778D795CB0DDC051 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +140,7 @@
 		0B257B932711C66200852D96 /* LBTA_Maps */ = {
 			isa = PBXGroup;
 			children = (
+				0B98D187281005E30013D3C3 /* Places */,
 				0B98D17127F9A8C60013D3C3 /* Directions */,
 				0B98D17027F84A7E0013D3C3 /* View */,
 				0B257B982711C66200852D96 /* MapController.swift */,
@@ -174,6 +194,37 @@
 			path = Directions;
 			sourceTree = "<group>";
 		};
+		0B98D187281005E30013D3C3 /* Places */ = {
+			isa = PBXGroup;
+			children = (
+				0B98D1882810060A0013D3C3 /* PlacesController.swift */,
+			);
+			path = Places;
+			sourceTree = "<group>";
+		};
+		9259F9F2778D795CB0DDC051 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E836609D1340DCCF16893F43 /* Pods_LBTA_Maps.framework */,
+				23CF1AFEA64D08D7CA4C585C /* Pods_LBTA_Maps_LBTA_MapsUITests.framework */,
+				02A5F4BC208443432F848FA2 /* Pods_LBTA_MapsTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E8E5D71E51F140DE51CF4634 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1C58860CF4B76E4F70407CBC /* Pods-LBTA_Maps.debug.xcconfig */,
+				65649A47E36A800B08716736 /* Pods-LBTA_Maps.release.xcconfig */,
+				DA2A98C012C0D5BF95B1018E /* Pods-LBTA_Maps-LBTA_MapsUITests.debug.xcconfig */,
+				D02ED0085D2F398055D8F4CD /* Pods-LBTA_Maps-LBTA_MapsUITests.release.xcconfig */,
+				AF5117D8153199681D0914E9 /* Pods-LBTA_MapsTests.debug.xcconfig */,
+				4064AC516CEC9280D43B5AD1 /* Pods-LBTA_MapsTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,9 +232,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B257BBB2711C66600852D96 /* Build configuration list for PBXNativeTarget "LBTA_Maps" */;
 			buildPhases = (
+				2C00CF2BC35C0B1FE48FB5C2 /* [CP] Check Pods Manifest.lock */,
 				0B257B8D2711C66200852D96 /* Sources */,
 				0B257B8E2711C66200852D96 /* Frameworks */,
 				0B257B8F2711C66200852D96 /* Resources */,
+				7FAC7CB6EDE3AFB6BF3C5F9A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -202,6 +255,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B257BBE2711C66600852D96 /* Build configuration list for PBXNativeTarget "LBTA_MapsTests" */;
 			buildPhases = (
+				EAB3B7356E44146DC6CDE0C9 /* [CP] Check Pods Manifest.lock */,
 				0B257BA32711C66600852D96 /* Sources */,
 				0B257BA42711C66600852D96 /* Frameworks */,
 				0B257BA52711C66600852D96 /* Resources */,
@@ -220,9 +274,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B257BC12711C66600852D96 /* Build configuration list for PBXNativeTarget "LBTA_MapsUITests" */;
 			buildPhases = (
+				F286BE5F2835C30257177EC1 /* [CP] Check Pods Manifest.lock */,
 				0B257BAD2711C66600852D96 /* Sources */,
 				0B257BAE2711C66600852D96 /* Frameworks */,
 				0B257BAF2711C66600852D96 /* Resources */,
+				B03F205EB0939B18D59C2262 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -307,6 +363,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2C00CF2BC35C0B1FE48FB5C2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LBTA_Maps-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7FAC7CB6EDE3AFB6BF3C5F9A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LBTA_Maps/Pods-LBTA_Maps-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LBTA_Maps/Pods-LBTA_Maps-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LBTA_Maps/Pods-LBTA_Maps-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B03F205EB0939B18D59C2262 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LBTA_Maps-LBTA_MapsUITests/Pods-LBTA_Maps-LBTA_MapsUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LBTA_Maps-LBTA_MapsUITests/Pods-LBTA_Maps-LBTA_MapsUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LBTA_Maps-LBTA_MapsUITests/Pods-LBTA_Maps-LBTA_MapsUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAB3B7356E44146DC6CDE0C9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LBTA_MapsTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F286BE5F2835C30257177EC1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LBTA_Maps-LBTA_MapsUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0B257B8D2711C66200852D96 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -325,6 +484,7 @@
 				0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */,
 				0B98D186280C00440013D3C3 /* RouteStepHeader.swift in Sources */,
 				0B98D16F27F848550013D3C3 /* CustomAnnotation.swift in Sources */,
+				0B98D1892810060A0013D3C3 /* PlacesController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +650,7 @@
 		};
 		0B257BBC2711C66600852D96 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C58860CF4B76E4F70407CBC /* Pods-LBTA_Maps.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -518,6 +679,7 @@
 		};
 		0B257BBD2711C66600852D96 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65649A47E36A800B08716736 /* Pods-LBTA_Maps.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -546,6 +708,7 @@
 		};
 		0B257BBF2711C66600852D96 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF5117D8153199681D0914E9 /* Pods-LBTA_MapsTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -571,6 +734,7 @@
 		};
 		0B257BC02711C66600852D96 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4064AC516CEC9280D43B5AD1 /* Pods-LBTA_MapsTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -596,6 +760,7 @@
 		};
 		0B257BC22711C66600852D96 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA2A98C012C0D5BF95B1018E /* Pods-LBTA_Maps-LBTA_MapsUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -619,6 +784,7 @@
 		};
 		0B257BC32711C66600852D96 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D02ED0085D2F398055D8F4CD /* Pods-LBTA_Maps-LBTA_MapsUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
