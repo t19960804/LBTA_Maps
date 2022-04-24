@@ -3,9 +3,9 @@ import MapKit
 import GooglePlaces
 
 class PlacesController: UIViewController, CLLocationManagerDelegate {
-    
-    let mapView = MKMapView()
-    let locationManager = CLLocationManager()
+    private let mapView = MKMapView()
+    private let locationManager = CLLocationManager()
+    private var previousCallOutView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,6 +13,7 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
         view.addSubview(mapView)
         mapView.fillSuperview()
         mapView.showsUserLocation = true
+        mapView.delegate = self
         locationManager.delegate = self
         
         requestForLocationAuthorization()
@@ -32,10 +33,10 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
                 
                 let place = likelihood.place
                 
-                let annotation = MKPointAnnotation()
+                let annotation = PlaceAnnotation()
                 annotation.title = place.name
                 annotation.coordinate = place.coordinate
-                
+                annotation.types = place.types ?? []
                 self?.mapView.addAnnotation(annotation)
             })
             
@@ -60,5 +61,44 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
         mapView.setRegion(region, animated: false)
         
         findNearbyPlaces()
+        locationManager.stopUpdatingLocation()
+    }
+}
+
+extension PlacesController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let placeAnnotation = annotation as? PlaceAnnotation else {
+            return nil
+        }
+        let view = MKPinAnnotationView(annotation: placeAnnotation, reuseIdentifier: "id")
+        //view.canShowCallout = true
+        if let firstType = placeAnnotation.types.first {
+            if firstType == "bar" {
+                view.image = UIImage(named: "bar")
+            } else if firstType == "restaurant" {
+                view.image = UIImage(named: "restaurant")
+            } else {
+                view.image = UIImage(named: "tourist")
+            }
+        }
+        return view
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        previousCallOutView?.removeFromSuperview()
+        previousCallOutView = nil
+        
+        let customCallOutView = UIView()
+        customCallOutView.translatesAutoresizingMaskIntoConstraints = false
+        customCallOutView.backgroundColor = .red
+        view.addSubview(customCallOutView)
+        NSLayoutConstraint.activate([
+            customCallOutView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customCallOutView.bottomAnchor.constraint(equalTo: view.topAnchor),
+            customCallOutView.widthAnchor.constraint(equalToConstant: 100 * getHScale()),
+            customCallOutView.heightAnchor.constraint(equalToConstant: 100 * getVScale())
+        ])
+        
+        previousCallOutView = customCallOutView
     }
 }

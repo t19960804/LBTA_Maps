@@ -28,6 +28,7 @@
 		0B98D181280AC91C0013D3C3 /* RouteStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */; };
 		0B98D186280C00440013D3C3 /* RouteStepHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D185280C00430013D3C3 /* RouteStepHeader.swift */; };
 		0B98D1892810060A0013D3C3 /* PlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D1882810060A0013D3C3 /* PlacesController.swift */; };
+		0B98D18B28143EA20013D3C3 /* PlaceAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D18A28143EA20013D3C3 /* PlaceAnnotation.swift */; };
 		78FE9F34ABEE11F1A1DC5826 /* Pods_LBTA_Maps_LBTA_MapsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CF1AFEA64D08D7CA4C585C /* Pods_LBTA_Maps_LBTA_MapsUITests.framework */; };
 		7C7B2E7C9DDC64EF99009347 /* Pods_LBTA_MapsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A5F4BC208443432F848FA2 /* Pods_LBTA_MapsTests.framework */; };
 		EAB00ACE0F68FC520BE75685 /* Pods_LBTA_Maps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E836609D1340DCCF16893F43 /* Pods_LBTA_Maps.framework */; };
@@ -75,6 +76,7 @@
 		0B98D180280AC91C0013D3C3 /* RouteStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepCell.swift; sourceTree = "<group>"; };
 		0B98D185280C00430013D3C3 /* RouteStepHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStepHeader.swift; sourceTree = "<group>"; };
 		0B98D1882810060A0013D3C3 /* PlacesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesController.swift; sourceTree = "<group>"; };
+		0B98D18A28143EA20013D3C3 /* PlaceAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAnnotation.swift; sourceTree = "<group>"; };
 		1C58860CF4B76E4F70407CBC /* Pods-LBTA_Maps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LBTA_Maps.debug.xcconfig"; path = "Target Support Files/Pods-LBTA_Maps/Pods-LBTA_Maps.debug.xcconfig"; sourceTree = "<group>"; };
 		23CF1AFEA64D08D7CA4C585C /* Pods_LBTA_Maps_LBTA_MapsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LBTA_Maps_LBTA_MapsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4064AC516CEC9280D43B5AD1 /* Pods-LBTA_MapsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LBTA_MapsTests.release.xcconfig"; path = "Target Support Files/Pods-LBTA_MapsTests/Pods-LBTA_MapsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				0B98D1882810060A0013D3C3 /* PlacesController.swift */,
+				0B98D18A28143EA20013D3C3 /* PlaceAnnotation.swift */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */,
 				0B5A335527143A2700467F4F /* MapPreview.swift in Sources */,
 				0B98D17F280AC60F0013D3C3 /* RouteStepsVC.swift in Sources */,
+				0B98D18B28143EA20013D3C3 /* PlaceAnnotation.swift in Sources */,
 				0B98D17A2801A2E70013D3C3 /* LocationSearchCell.swift in Sources */,
 				0B98D178280195A60013D3C3 /* LocationSearchVC.swift in Sources */,
 				0B98D181280AC91C0013D3C3 /* RouteStepCell.swift in Sources */,
