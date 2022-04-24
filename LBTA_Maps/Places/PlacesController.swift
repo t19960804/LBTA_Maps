@@ -33,10 +33,9 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
                 
                 let place = likelihood.place
                 
-                let annotation = PlaceAnnotation()
+                let annotation = PlaceAnnotation(place: place)
                 annotation.title = place.name
                 annotation.coordinate = place.coordinate
-                annotation.types = place.types ?? []
                 self?.mapView.addAnnotation(annotation)
             })
             
@@ -72,7 +71,7 @@ extension PlacesController: MKMapViewDelegate {
         }
         let view = MKPinAnnotationView(annotation: placeAnnotation, reuseIdentifier: "id")
         //view.canShowCallout = true
-        if let firstType = placeAnnotation.types.first {
+        if let firstType = placeAnnotation.place.types?.first {
             if firstType == "bar" {
                 view.image = UIImage(named: "bar")
             } else if firstType == "restaurant" {
@@ -89,16 +88,65 @@ extension PlacesController: MKMapViewDelegate {
         previousCallOutView = nil
         
         let customCallOutView = UIView()
+        customCallOutView.backgroundColor = .white
         customCallOutView.translatesAutoresizingMaskIntoConstraints = false
-        customCallOutView.backgroundColor = .red
+        customCallOutView.layer.borderColor = UIColor.darkGray.cgColor
+        customCallOutView.layer.borderWidth = 2 * getHScale()
+        customCallOutView.setupShadow(opacity: 0.2, radius: 5, offset: .zero, color: .darkGray)
+        customCallOutView.layer.cornerRadius = 5
+        customCallOutView.clipsToBounds = true
         view.addSubview(customCallOutView)
+        
+        let widthAnchor = customCallOutView.widthAnchor.constraint(equalToConstant: 100 * getHScale())
+        let heightAnchor =             customCallOutView.heightAnchor.constraint(equalToConstant: 100 * getVScale())
         NSLayoutConstraint.activate([
             customCallOutView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             customCallOutView.bottomAnchor.constraint(equalTo: view.topAnchor),
-            customCallOutView.widthAnchor.constraint(equalToConstant: 100 * getHScale()),
-            customCallOutView.heightAnchor.constraint(equalToConstant: 100 * getVScale())
+            widthAnchor,
+            heightAnchor
         ])
         
         previousCallOutView = customCallOutView
+        
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.color = .black
+        customCallOutView.addSubview(indicator)
+        indicator.fillSuperview()
+        indicator.startAnimating()
+        
+        guard let placeAnnotation = view.annotation as? PlaceAnnotation,
+              let placeId = placeAnnotation.place.placeID else { return }
+        client.lookUpPhotos(forPlaceID: placeId) { [weak self] list, error in
+            if let error = error {
+                print("Error - lookUpPhotos failed:\(error)")
+                return
+            }
+            guard let data = list?.results.first else { return }
+            self?.client.loadPlacePhoto(data) { image, error in
+                if let error = error {
+                    print("Error - loadPlacePhoto failed:\(error)")
+                    return
+                }
+                guard let image = image else { return }
+                // Resize customCallOutView
+                if image.size.width > image.size.height {
+                    let newWidth: CGFloat = 200 * getHScale()
+                    let newHeight: CGFloat = newWidth * image.size.height / image.size.width * getVScale()
+                    widthAnchor.constant = newWidth
+                    heightAnchor.constant = newHeight
+                } else {
+                    let newHeight: CGFloat = 200 * getVScale()
+                    let newWidth: CGFloat = newHeight * image.size.width / image.size.height * getHScale()
+                    widthAnchor.constant = newWidth
+                    heightAnchor.constant = newHeight
+                }
+                
+                let imageView = UIImageView(image: image)
+                customCallOutView.addSubview(imageView)
+                imageView.fillSuperview()
+                
+                indicator.stopAnimating()
+            }
+        }
     }
 }
