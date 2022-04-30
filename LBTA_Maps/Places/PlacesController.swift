@@ -136,14 +136,8 @@ extension PlacesController: MKMapViewDelegate {
         previousCallOutView?.removeFromSuperview()
         previousCallOutView = nil
         
-        let customCallOutView = UIView()
-        customCallOutView.backgroundColor = .white
-        customCallOutView.translatesAutoresizingMaskIntoConstraints = false
-        customCallOutView.layer.borderColor = UIColor.darkGray.cgColor
-        customCallOutView.layer.borderWidth = 2 * getHScale()
-        customCallOutView.setupShadow(opacity: 0.2, radius: 5, offset: .zero, color: .darkGray)
-        customCallOutView.layer.cornerRadius = 5
-        customCallOutView.clipsToBounds = true
+        let customCallOutView = CustomCalloutView()
+        customCallOutView.indicator.startAnimating()
         view.addSubview(customCallOutView)
         
         let widthAnchor = customCallOutView.widthAnchor.constraint(equalToConstant: 100 * getHScale())
@@ -156,12 +150,6 @@ extension PlacesController: MKMapViewDelegate {
         ])
         
         previousCallOutView = customCallOutView
-        
-        let indicator = UIActivityIndicatorView(style: .large)
-        indicator.color = .black
-        customCallOutView.addSubview(indicator)
-        indicator.fillSuperview()
-        indicator.startAnimating()
         
         guard let placeAnnotation = view.annotation as? PlaceAnnotation,
               let metaData = placeAnnotation.place.photos?.first else {
@@ -190,7 +178,7 @@ extension PlacesController: MKMapViewDelegate {
             customCallOutView.addSubview(imageView)
             imageView.fillSuperview()
             
-            indicator.stopAnimating()
+            customCallOutView.indicator.startAnimating()
             self.updateInfoView(place: placeAnnotation.place)
         }
     }
