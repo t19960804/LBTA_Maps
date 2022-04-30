@@ -155,12 +155,13 @@ extension PlacesController: MKMapViewDelegate {
               let metaData = placeAnnotation.place.photos?.first else {
             return
         }
-        client.loadPlacePhoto(metaData) { image, error in
+        client.loadPlacePhoto(metaData) { [weak self] image, error in
             if let error = error {
                 print("Error - loadPlacePhoto failed:\(error)")
                 return
             }
-            guard let image = image else { return }
+            guard let self = self,
+                  let image = image else { return }
             // Resize customCallOutView
             let newSize = self.getOptimalCalloutViewSize(image: image)
             widthAnchor.constant = newSize.width
