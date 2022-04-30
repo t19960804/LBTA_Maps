@@ -3,6 +3,7 @@ import LBTATools
 
 class CustomCalloutView: UIView {
     let indicator = UIActivityIndicatorView(style: .large)
+    let imageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -21,6 +22,9 @@ class CustomCalloutView: UIView {
         indicator.color = .black
         addSubview(indicator)
         indicator.fillSuperview()
+        
+        addSubview(imageView)
+        imageView.fillSuperview()
     }
     
     required init?(coder: NSCoder) {

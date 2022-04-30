@@ -174,11 +174,8 @@ extension PlacesController: MKMapViewDelegate {
                 heightAnchor.constant = newHeight
             }
             
-            let imageView = UIImageView(image: image)
-            customCallOutView.addSubview(imageView)
-            imageView.fillSuperview()
-            
-            customCallOutView.indicator.startAnimating()
+            customCallOutView.imageView.image = image
+            customCallOutView.indicator.stopAnimating()
             self.updateInfoView(place: placeAnnotation.place)
         }
     }
