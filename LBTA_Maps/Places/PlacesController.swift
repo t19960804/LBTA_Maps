@@ -3,23 +3,72 @@ import MapKit
 import GooglePlaces
 
 class PlacesController: UIViewController, CLLocationManagerDelegate {
-    private let mapView = MKMapView()
     private let locationManager = CLLocationManager()
+    private let client = GMSPlacesClient()
+
+    private let mapView = MKMapView()
     private var previousCallOutView: UIView?
+    // InfoView
+    private let infoView = UIView(backgroundColor: .white)
+    private let nameLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 17 * getHScale()), textColor: .black, textAlignment: .left, numberOfLines: 1)
+    private let addressLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 17 * getHScale()), textColor: .lightGray, textAlignment: .left, numberOfLines: 2)
+    private let typeLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 14 * getHScale()), textColor: .lightGray, textAlignment: .left, numberOfLines: 1)
+    private let infoButton = UIButton(type: .infoLight)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupMapView()
+        setupInfoView()
+        requestForLocationAuthorization()
+    }
+    
+    private func setupMapView() {
         view.addSubview(mapView)
         mapView.fillSuperview()
         mapView.showsUserLocation = true
         mapView.delegate = self
         locationManager.delegate = self
-        
-        requestForLocationAuthorization()
     }
     
-    let client = GMSPlacesClient()
+    private func setupInfoView() {
+        infoView.alpha = 0
+        infoView.layer.cornerRadius = 5 * getHScale()
+        infoView.setupShadow(opacity: 0.2, radius: 5, offset: .zero, color: .darkGray)
+        view.addSubview(infoView)
+        infoView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10 * getHScale(), bottom: 5 * getVScale(), right: 10 * getHScale()), size: .init(width: 0, height: 125 * getVScale()))
+        
+        addressLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoView.addSubview(addressLabel)
+        NSLayoutConstraint.activate([
+            addressLabel.centerYAnchor.constraint(equalTo: infoView.centerYAnchor),
+            addressLabel.leadingAnchor.constraint(equalTo: infoView.leadingAnchor, constant: 7 * getHScale())
+        ])
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoView.addSubview(nameLabel)
+        NSLayoutConstraint.activate([
+            nameLabel.bottomAnchor.constraint(equalTo: addressLabel.topAnchor, constant: -4 * getVScale()),
+            nameLabel.leadingAnchor.constraint(equalTo: addressLabel.leadingAnchor)
+        ])
+        typeLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoView.addSubview(typeLabel)
+        NSLayoutConstraint.activate([
+            typeLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 4 * getVScale()),
+            typeLabel.leadingAnchor.constraint(equalTo: addressLabel.leadingAnchor)
+        ])
+        infoButton.translatesAutoresizingMaskIntoConstraints = false
+        infoView.addSubview(infoButton)
+        NSLayoutConstraint.activate([
+            infoButton.topAnchor.constraint(equalTo: infoView.topAnchor, constant: 8 * getVScale()),
+            infoButton.trailingAnchor.constraint(equalTo: infoView.trailingAnchor, constant: -8 * getVScale())
+        ])
+    }
+    
+    private func updateInfoView(place: GMSPlace) {
+        infoView.alpha = 1
+        nameLabel.text = place.name
+        addressLabel.text = place.formattedAddress
+        typeLabel.text = place.types?.joined(separator: ", ")
+    }
     
     fileprivate func findNearbyPlaces() {
         client.currentPlace { [weak self] (likelihoodList, err) in
@@ -142,6 +191,7 @@ extension PlacesController: MKMapViewDelegate {
             imageView.fillSuperview()
             
             indicator.stopAnimating()
+            self.updateInfoView(place: placeAnnotation.place)
         }
     }
 }
