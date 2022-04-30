@@ -115,38 +115,33 @@ extension PlacesController: MKMapViewDelegate {
         indicator.startAnimating()
         
         guard let placeAnnotation = view.annotation as? PlaceAnnotation,
-              let placeId = placeAnnotation.place.placeID else { return }
-        client.lookUpPhotos(forPlaceID: placeId) { [weak self] list, error in
+              let metaData = placeAnnotation.place.photos?.first else {
+            return
+        }
+        client.loadPlacePhoto(metaData) { image, error in
             if let error = error {
-                print("Error - lookUpPhotos failed:\(error)")
+                print("Error - loadPlacePhoto failed:\(error)")
                 return
             }
-            guard let data = list?.results.first else { return }
-            self?.client.loadPlacePhoto(data) { image, error in
-                if let error = error {
-                    print("Error - loadPlacePhoto failed:\(error)")
-                    return
-                }
-                guard let image = image else { return }
-                // Resize customCallOutView
-                if image.size.width > image.size.height {
-                    let newWidth: CGFloat = 200 * getHScale()
-                    let newHeight: CGFloat = newWidth * image.size.height / image.size.width * getVScale()
-                    widthAnchor.constant = newWidth
-                    heightAnchor.constant = newHeight
-                } else {
-                    let newHeight: CGFloat = 200 * getVScale()
-                    let newWidth: CGFloat = newHeight * image.size.width / image.size.height * getHScale()
-                    widthAnchor.constant = newWidth
-                    heightAnchor.constant = newHeight
-                }
-                
-                let imageView = UIImageView(image: image)
-                customCallOutView.addSubview(imageView)
-                imageView.fillSuperview()
-                
-                indicator.stopAnimating()
+            guard let image = image else { return }
+            // Resize customCallOutView
+            if image.size.width > image.size.height {
+                let newWidth: CGFloat = 200 * getHScale()
+                let newHeight: CGFloat = newWidth * image.size.height / image.size.width * getVScale()
+                widthAnchor.constant = newWidth
+                heightAnchor.constant = newHeight
+            } else {
+                let newHeight: CGFloat = 200 * getVScale()
+                let newWidth: CGFloat = newHeight * image.size.width / image.size.height * getHScale()
+                widthAnchor.constant = newWidth
+                heightAnchor.constant = newHeight
             }
+            
+            let imageView = UIImageView(image: image)
+            customCallOutView.addSubview(imageView)
+            imageView.fillSuperview()
+            
+            indicator.stopAnimating()
         }
     }
 }
