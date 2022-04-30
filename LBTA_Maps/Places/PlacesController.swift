@@ -7,7 +7,7 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
     private let client = GMSPlacesClient()
 
     private let mapView = MKMapView()
-    private var previousCallOutView: UIView?
+    private var previousCalloutView: UIView?
     // InfoView
     private let infoView = UIView(backgroundColor: .white)
     private let nameLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 17 * getHScale()), textColor: .black, textAlignment: .left, numberOfLines: 1)
@@ -133,23 +133,23 @@ extension PlacesController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        previousCallOutView?.removeFromSuperview()
-        previousCallOutView = nil
+        previousCalloutView?.removeFromSuperview()
+        previousCalloutView = nil
         
-        let customCallOutView = CustomCalloutView()
-        customCallOutView.indicator.startAnimating()
-        view.addSubview(customCallOutView)
+        let customCalloutView = CustomCalloutView()
+        customCalloutView.indicator.startAnimating()
+        view.addSubview(customCalloutView)
         
-        let widthAnchor = customCallOutView.widthAnchor.constraint(equalToConstant: 100 * getHScale())
-        let heightAnchor =             customCallOutView.heightAnchor.constraint(equalToConstant: 100 * getVScale())
+        let widthAnchor = customCalloutView.widthAnchor.constraint(equalToConstant: 100 * getHScale())
+        let heightAnchor =             customCalloutView.heightAnchor.constraint(equalToConstant: 100 * getVScale())
         NSLayoutConstraint.activate([
-            customCallOutView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            customCallOutView.bottomAnchor.constraint(equalTo: view.topAnchor),
+            customCalloutView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            customCalloutView.bottomAnchor.constraint(equalTo: view.topAnchor),
             widthAnchor,
             heightAnchor
         ])
         
-        previousCallOutView = customCallOutView
+        previousCalloutView = customCalloutView
         
         guard let placeAnnotation = view.annotation as? PlaceAnnotation,
               let metaData = placeAnnotation.place.photos?.first else {
@@ -162,21 +162,27 @@ extension PlacesController: MKMapViewDelegate {
             }
             guard let image = image else { return }
             // Resize customCallOutView
-            if image.size.width > image.size.height {
-                let newWidth: CGFloat = 200 * getHScale()
-                let newHeight: CGFloat = newWidth * image.size.height / image.size.width * getVScale()
-                widthAnchor.constant = newWidth
-                heightAnchor.constant = newHeight
-            } else {
-                let newHeight: CGFloat = 200 * getVScale()
-                let newWidth: CGFloat = newHeight * image.size.width / image.size.height * getHScale()
-                widthAnchor.constant = newWidth
-                heightAnchor.constant = newHeight
-            }
+            let newSize = self.getOptimalCalloutViewSize(image: image)
+            widthAnchor.constant = newSize.width
+            heightAnchor.constant = newSize.height
             
-            customCallOutView.imageView.image = image
-            customCallOutView.indicator.stopAnimating()
+            customCalloutView.imageView.image = image
+            customCalloutView.indicator.stopAnimating()
             self.updateInfoView(place: placeAnnotation.place)
         }
+    }
+    
+    private func getOptimalCalloutViewSize(image: UIImage) -> CGSize {
+        var newWidth: CGFloat!
+        var newHeight: CGFloat!
+        
+        if image.size.width > image.size.height {
+            newWidth = 200 * getHScale()
+            newHeight = newWidth * image.size.height / image.size.width * getVScale()
+        } else {
+            newWidth = 200 * getVScale()
+            newHeight = newHeight * image.size.width / image.size.height * getHScale()
+        }
+        return .init(width: newWidth, height: newHeight)
     }
 }
