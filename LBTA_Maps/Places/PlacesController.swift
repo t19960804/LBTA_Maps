@@ -181,8 +181,8 @@ extension PlacesController: MKMapViewDelegate {
             newWidth = 200 * getHScale()
             newHeight = newWidth * image.size.height / image.size.width * getVScale()
         } else {
-            newWidth = 200 * getVScale()
-            newHeight = newHeight * image.size.width / image.size.height * getHScale()
+            newHeight = 200 * getVScale()
+            newWidth = newHeight * image.size.width / image.size.height * getHScale()
         }
         return .init(width: newWidth, height: newHeight)
     }
