@@ -1,6 +1,7 @@
 import LBTATools
 import MapKit
 import GooglePlaces
+import JGProgressHUD
 
 class PlacesController: UIViewController, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
@@ -70,9 +71,14 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
         guard let placeAnnotation = annotation as? PlaceAnnotation else {
             return
         }
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "載入中..."
+        hud.show(in: self.view, animated: true)
+        
         client.lookUpPhotos(forPlaceID: placeAnnotation.place.placeID ?? "") { [weak self] list, error in
             guard let self = self else { return }
             if let error = error {
+                hud.dismiss(animated: true)
                 print("Error - lookUpPhotos failed:\(error)")
                 return
             }
@@ -83,6 +89,7 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
                 dispatchGroup.enter() // counter + 1
                 self.client.loadPlacePhoto(metaData) { image, error in
                     if let error = error {
+                        hud.dismiss(animated: true)
                         print("Error - loadPlacePhoto failed:\(error)")
                         return
                     }
@@ -93,8 +100,9 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
                 }
             }
             dispatchGroup.notify(queue: .main) { // counter = 0
+                hud.dismiss(animated: true)
                 let vc = PlaceImagesListVC(images: placeImages)
-                self.present(vc, animated: true)
+                self.present(UINavigationController(rootViewController: vc), animated: true)
             }
         }
     }

@@ -14,6 +14,7 @@ class PlaceImagesListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "圖片"
         view.backgroundColor = .white
         setupCollectionView()
     }
