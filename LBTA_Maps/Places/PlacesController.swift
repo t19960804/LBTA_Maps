@@ -88,8 +88,7 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
                 }
             }
             dispatchGroup.notify(queue: .main) { // counter = 0
-                let vc = UIViewController()
-                vc.view.backgroundColor = .red
+                let vc = PlaceImagesListVC()
                 self.present(vc, animated: true)
             }
         }
