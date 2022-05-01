@@ -55,12 +55,44 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
             typeLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 4 * getVScale()),
             typeLabel.leadingAnchor.constraint(equalTo: addressLabel.leadingAnchor)
         ])
+        
+        infoButton.addTarget(self, action: #selector(presentPlaceImagesListVC), for: .touchUpInside)
         infoButton.translatesAutoresizingMaskIntoConstraints = false
         infoView.addSubview(infoButton)
         NSLayoutConstraint.activate([
             infoButton.topAnchor.constraint(equalTo: infoView.topAnchor, constant: 8 * getVScale()),
             infoButton.trailingAnchor.constraint(equalTo: infoView.trailingAnchor, constant: -8 * getVScale())
         ])
+    }
+    
+    @objc private func presentPlaceImagesListVC() {
+        let annotation = mapView.selectedAnnotations.first
+        guard let placeAnnotation = annotation as? PlaceAnnotation else {
+            return
+        }
+        client.lookUpPhotos(forPlaceID: placeAnnotation.place.placeID ?? "") { [weak self] list, error in
+            guard let self = self else { return }
+            if let error = error {
+                print("Error - lookUpPhotos failed:\(error)")
+                return
+            }
+            let dispatchGroup = DispatchGroup()
+            list?.results.forEach { metaData in
+                dispatchGroup.enter() // counter + 1
+                self.client.loadPlacePhoto(metaData) { image, error in
+                    if let error = error {
+                        print("Error - loadPlacePhoto failed:\(error)")
+                        return
+                    }
+                    dispatchGroup.leave() // counter - 1
+                }
+            }
+            dispatchGroup.notify(queue: .main) { // counter = 0
+                let vc = UIViewController()
+                vc.view.backgroundColor = .red
+                self.present(vc, animated: true)
+            }
+        }
     }
     
     private func updateInfoView(place: GMSPlace) {
