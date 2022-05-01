@@ -1,7 +1,16 @@
 import UIKit
 
 class PlaceImagesListVC: UIViewController {
-    private let cellId = "cellId"
+    private var images = [UIImage]()
+    
+    init(images: [UIImage]) {
+        super.init(nibName: nil, bundle: nil)
+        self.images = images
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,9 +21,9 @@ class PlaceImagesListVC: UIViewController {
     private func setupCollectionView() {
         let layout = UICollectionViewCompositionalLayout(section: getDefaultSectionLayout())
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .orange
+        collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(PlaceImageListCell.self, forCellWithReuseIdentifier: PlaceImageListCell.cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
@@ -54,8 +63,8 @@ extension PlaceImagesListVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = UIColor.blue
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceImageListCell.cellId, for: indexPath) as! PlaceImageListCell
+        cell.imageView.image = images[indexPath.item]
         return cell
     }
 }

@@ -19,6 +19,7 @@
 		0B5A335527143A2700467F4F /* MapPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5A335427143A2700467F4F /* MapPreview.swift */; };
 		0B63A062281D338200DB63F1 /* CustomCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63A061281D338200DB63F1 /* CustomCalloutView.swift */; };
 		0B63A064281E8F8900DB63F1 /* PlaceImagesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63A063281E8F8900DB63F1 /* PlaceImagesListVC.swift */; };
+		0B63A066281E979300DB63F1 /* PlaceImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63A065281E979300DB63F1 /* PlaceImageListCell.swift */; };
 		0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */; };
 		0B98D16D27EF14B20013D3C3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16C27EF14B20013D3C3 /* Extension.swift */; };
 		0B98D16F27F848550013D3C3 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B98D16E27F848550013D3C3 /* CustomAnnotation.swift */; };
@@ -70,6 +71,7 @@
 		0B5A335427143A2700467F4F /* MapPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPreview.swift; sourceTree = "<group>"; };
 		0B63A061281D338200DB63F1 /* CustomCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalloutView.swift; sourceTree = "<group>"; };
 		0B63A063281E8F8900DB63F1 /* PlaceImagesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceImagesListVC.swift; sourceTree = "<group>"; };
+		0B63A065281E979300DB63F1 /* PlaceImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceImageListCell.swift; sourceTree = "<group>"; };
 		0B98D16A27EEFC4A0013D3C3 /* CarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
 		0B98D16C27EF14B20013D3C3 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		0B98D16E27F848550013D3C3 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				0B98D18A28143EA20013D3C3 /* PlaceAnnotation.swift */,
 				0B63A061281D338200DB63F1 /* CustomCalloutView.swift */,
 				0B63A063281E8F8900DB63F1 /* PlaceImagesListVC.swift */,
+				0B63A065281E979300DB63F1 /* PlaceImageListCell.swift */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B257B992711C66200852D96 /* MapController.swift in Sources */,
+				0B63A066281E979300DB63F1 /* PlaceImageListCell.swift in Sources */,
 				0B257B952711C66200852D96 /* AppDelegate.swift in Sources */,
 				0B98D17327F9A8E70013D3C3 /* DirectionsVC.swift in Sources */,
 				0B63A064281E8F8900DB63F1 /* PlaceImagesListVC.swift in Sources */,

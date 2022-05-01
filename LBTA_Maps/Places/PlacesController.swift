@@ -76,6 +76,8 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
                 print("Error - lookUpPhotos failed:\(error)")
                 return
             }
+            var placeImages = [UIImage]()
+            
             let dispatchGroup = DispatchGroup()
             list?.results.forEach { metaData in
                 dispatchGroup.enter() // counter + 1
@@ -84,11 +86,14 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
                         print("Error - loadPlacePhoto failed:\(error)")
                         return
                     }
+                    if let image = image {
+                        placeImages.append(image)
+                    }
                     dispatchGroup.leave() // counter - 1
                 }
             }
             dispatchGroup.notify(queue: .main) { // counter = 0
-                let vc = PlaceImagesListVC()
+                let vc = PlaceImagesListVC(images: placeImages)
                 self.present(vc, animated: true)
             }
         }
