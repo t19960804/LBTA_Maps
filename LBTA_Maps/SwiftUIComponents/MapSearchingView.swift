@@ -56,6 +56,8 @@ class MapSearchingViewModel: ObservableObject {
 
 }
 struct MapSearchingView: View {
+    // 如果要觀察的是基本型別, 例如Int, Bool..., 可以使用 @State
+    // 如果要觀察的是一個class裡面的基本型別, 可以使用 @ObservedObject, 但是class要服從ObservableObject協議, 且裡面基本型別的屬性要使用 @Published
     @ObservedObject var vm = MapSearchingViewModel()
     
     var body: some View {
