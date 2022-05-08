@@ -58,7 +58,9 @@ class MapSearchingViewModel: ObservableObject {
 struct MapSearchingView: View {
     // 如果要觀察的是基本型別, 例如Int, Bool..., 可以使用 @State
     // 如果要觀察的是一個class裡面的基本型別, 可以使用 @ObservedObject, 但是class要服從ObservableObject協議, 且裡面基本型別的屬性要使用 @Published
-    @ObservedObject var vm = MapSearchingViewModel()
+    //在iOS14時推出 @StateObject來取代 @ObservedObject, 因為 @ObservedObject有Bug
+    //詳情請見 https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E6%95%99%E5%AE%A4/10-observedobject%E7%9A%84%E4%BD%BF%E7%94%A8-187eb99d86bb
+    @StateObject var vm = MapSearchingViewModel()
     
     var body: some View {
         ZStack(alignment: .top){ // 後面產生的元件將疊在之前的元件身上
