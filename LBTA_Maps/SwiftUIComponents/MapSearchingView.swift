@@ -1,5 +1,6 @@
 import SwiftUI
 import MapKit
+import Combine
 
 // UIViewRepresentable > 將UIKit的View做包裝, 讓這個View可以放在SwiftUI裡面
 struct MapViewContainer: UIViewRepresentable {
@@ -31,6 +32,24 @@ class MapSearchingViewModel: ObservableObject {
     // @State > 只要變數被改變, SwiftUI就會自動更新有使用到此變數的UI
     @Published var annotations = [MKPointAnnotation]()
     @Published var isSearching = false
+    @Published var searchQuery = ""
+
+    private var searQuerySubscription: AnyCancellable?
+    
+    init() {
+        searQuerySubscription = $searchQuery
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] searchTerm in
+                guard let self = self else { return }
+                self.performSearch(term: searchTerm)
+            }
+    }
+    
+    deinit {
+        searQuerySubscription?.cancel()
+    }
     
     fileprivate func performSearch(term: String) {
         isSearching = true
@@ -68,23 +87,27 @@ struct MapSearchingView: View {
                 .edgesIgnoringSafeArea(.all)
             VStack(spacing: 12) {
                 HStack {
-                    Button {
-                        vm.performSearch(term: "Airports")
-                    } label: {
-                        Text("Search for airports")
-                            .padding()
-                            .background(Color.white)
-                    }
-                    
-                    Button {
-                        vm.annotations = []
-                    } label: {
-                        Text("Clear Annotations")
-                            .padding()
-                            .background(Color.white)
-                    }
+                    TextField("Search terms", text: $vm.searchQuery)
+                        .padding()
+                        .background(Color.white)
+//                    Button {
+//                        vm.performSearch(term: "Airports")
+//                    } label: {
+//                        Text("Search for airports")
+//                            .padding()
+//                            .background(Color.white)
+//                    }
+//
+//                    Button {
+//                        vm.annotations = []
+//                    } label: {
+//                        Text("Clear Annotations")
+//                            .padding()
+//                            .background(Color.white)
+//                    }
                 }
                 .shadow(radius: 3)
+                .padding()
                 
                 Text(vm.isSearching ? "Searching..." : "")
             }
