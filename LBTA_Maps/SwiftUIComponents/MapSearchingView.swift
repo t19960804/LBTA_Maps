@@ -5,6 +5,7 @@ import Combine
 // UIViewRepresentable > 將UIKit的View做包裝, 讓這個View可以放在SwiftUI裡面
 struct MapViewContainer: UIViewRepresentable {
     var annotations = [MKPointAnnotation]()
+    var selectedMapItem: MKMapItem?
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
@@ -21,19 +22,28 @@ struct MapViewContainer: UIViewRepresentable {
             uiView.addAnnotations(annotations)
             uiView.showAnnotations(annotations, animated: true)
         }
+        if let item = selectedMapItem {
+            annotations.forEach {
+                if $0.title == item.name {
+                    uiView.selectAnnotation($0, animated: true)
+                }
+            }
+        }
     }
     
     typealias UIViewType = MKMapView
 }
 
 // Brian > Keep track of properties that your view needs to render
-// ViewModel > 將fetch資料的code從SwiftUI View抽離出來, 因為SwiftUI View只負責"呈現"
+// ViewModel > 將fetch資料的code從SwiftUI View抽離出來, 因為SwiftUI View只負責"呈現"以及提供使用者"操作"
 class MapSearchingViewModel: ObservableObject {
     // @State > 只要變數被改變, SwiftUI就會自動更新有使用到此變數的UI
+    @Published var mapItems = [MKMapItem]()
     @Published var annotations = [MKPointAnnotation]()
     @Published var isSearching = false
     @Published var searchQuery = ""
-
+    @Published var selectedMapItem: MKMapItem?
+    
     private var searQuerySubscription: AnyCancellable?
     
     init() {
@@ -69,6 +79,7 @@ class MapSearchingViewModel: ObservableObject {
                 annotaion.coordinate = $0.placemark.coordinate
                 airportAnnotations.append(annotaion)
             }
+            self.mapItems = response?.mapItems ?? []
             self.annotations = airportAnnotations
         }
     }
@@ -77,39 +88,49 @@ class MapSearchingViewModel: ObservableObject {
 struct MapSearchingView: View {
     // 如果要觀察的是基本型別, 例如Int, Bool..., 可以使用 @State
     // 如果要觀察的是一個class裡面的基本型別, 可以使用 @ObservedObject, 但是class要服從ObservableObject協議, 且裡面基本型別的屬性要使用 @Published
-    //在iOS14時推出 @StateObject來取代 @ObservedObject, 因為 @ObservedObject有Bug
-    //詳情請見 https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E6%95%99%E5%AE%A4/10-observedobject%E7%9A%84%E4%BD%BF%E7%94%A8-187eb99d86bb
+    // 在iOS14時推出 @StateObject來取代 @ObservedObject, 因為 @ObservedObject有Bug
+    // 詳情請見 https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E6%95%99%E5%AE%A4/10-observedobject%E7%9A%84%E4%BD%BF%E7%94%A8-187eb99d86bb
     @StateObject var vm = MapSearchingViewModel()
     
     var body: some View {
         ZStack(alignment: .top){ // 後面產生的元件將疊在之前的元件身上
-            MapViewContainer(annotations: vm.annotations)
+            MapViewContainer(annotations: vm.annotations, selectedMapItem: vm.selectedMapItem)
                 .edgesIgnoringSafeArea(.all)
-            VStack(spacing: 12) {
+            VStack(spacing: 12 * getHScale()) {
                 HStack {
                     TextField("Search terms", text: $vm.searchQuery)
                         .padding()
                         .background(Color.white)
-//                    Button {
-//                        vm.performSearch(term: "Airports")
-//                    } label: {
-//                        Text("Search for airports")
-//                            .padding()
-//                            .background(Color.white)
-//                    }
-//
-//                    Button {
-//                        vm.annotations = []
-//                    } label: {
-//                        Text("Clear Annotations")
-//                            .padding()
-//                            .background(Color.white)
-//                    }
                 }
                 .shadow(radius: 3)
                 .padding()
                 
                 Text(vm.isSearching ? "Searching..." : "")
+                
+                Spacer()
+                
+                ScrollView(.horizontal) {
+                    HStack(spacing: 16 * getHScale()) {
+                        ForEach(vm.mapItems, id: \.self) { item in
+                            Button {
+                                vm.selectedMapItem = item
+                            } label: {
+                                VStack(alignment: .leading, spacing: 4 * getVScale()) {
+                                    Text(item.name ?? "")
+                                        .font(.headline)
+                                    Text(item.placemark.title ?? "")
+                                }
+                            }
+                            .foregroundColor(.black)
+                            .padding()
+                            .frame(width: 200 * getHScale(), height: 100 * getVScale())
+                            .background(Color.white)
+                            .cornerRadius(5 * getHScale())
+                        }
+                    }
+                    .padding(.horizontal, 16 * getHScale())
+                }
+                .shadow(radius: 5)
             }
             
         }
