@@ -102,7 +102,6 @@ struct MapSearchingView: View {
                         .padding()
                         .background(Color.white)
                 }
-                .shadow(radius: 3)
                 .padding()
                 
                 Text(vm.isSearching ? "Searching..." : "")
