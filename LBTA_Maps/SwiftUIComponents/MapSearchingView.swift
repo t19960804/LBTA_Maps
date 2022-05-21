@@ -7,7 +7,10 @@ struct MapViewContainer: UIViewRepresentable {
     var annotations = [MKPointAnnotation]()
     var selectedMapItem: MKMapItem?
     
-    //若要在SwiftUI實作UIKit當中的delegate & datasource, 需要使用coordinator
+    //若要在SwiftUI實作UIKit當中的delegate, 需要使用Coordinator
+    //Coordinator > 協調者, 協調SwiftUI與UIKit之間的delegate
+    //僅建立Coordinator class還不夠, 還需要實作.makeCoordinator()
+    //兩個條件完成後, SwiftUI才會自動呼叫.makeCoordinator()來使用Coordinator class
     //https://www.hackingwithswift.com/books/ios-swiftui/using-coordinators-to-manage-swiftui-view-controllers
     class Coordinator: NSObject, MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
