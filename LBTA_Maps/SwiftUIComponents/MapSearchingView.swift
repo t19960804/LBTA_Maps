@@ -7,8 +7,23 @@ struct MapViewContainer: UIViewRepresentable {
     var annotations = [MKPointAnnotation]()
     var selectedMapItem: MKMapItem?
     
+    //若要在SwiftUI實作UIKit當中的delegate & datasource, 需要使用coordinator
+    //https://www.hackingwithswift.com/books/ios-swiftui/using-coordinators-to-manage-swiftui-view-controllers
+    class Coordinator: NSObject, MKMapViewDelegate {
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
+            view.canShowCallout = true
+            return view
+        }
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
+        mapView.delegate = context.coordinator
         let coordinate = CLLocationCoordinate2D(latitude: 25.0475613, longitude: 121.5173399)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate, span: span)
