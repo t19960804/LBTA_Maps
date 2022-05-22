@@ -6,6 +6,7 @@ import Combine
 struct MapViewContainer: UIViewRepresentable {
     var annotations = [MKPointAnnotation]()
     var selectedMapItem: MKMapItem?
+    var currentUserCoordinate: CLLocationCoordinate2D?
     
     //若要在SwiftUI實作UIKit當中的delegate, 需要使用Coordinator
     //Coordinator > 協調者, 協調SwiftUI與UIKit之間的delegate
@@ -14,9 +15,12 @@ struct MapViewContainer: UIViewRepresentable {
     //https://www.hackingwithswift.com/books/ios-swiftui/using-coordinators-to-manage-swiftui-view-controllers
     class Coordinator: NSObject, MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
-            view.canShowCallout = true
-            return view
+            if annotation is MKPointAnnotation {
+                let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
+                view.canShowCallout = true
+                return view
+            }
+            return nil
         }
     }
     
@@ -27,10 +31,7 @@ struct MapViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
-        let coordinate = CLLocationCoordinate2D(latitude: 25.0475613, longitude: 121.5173399)
-        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        let region = MKCoordinateRegion(center: coordinate, span: span)
-        mapView.setRegion(region, animated: true)
+        mapView.showsUserLocation = true
         return mapView
     }
     
@@ -47,62 +48,15 @@ struct MapViewContainer: UIViewRepresentable {
                 }
             }
         }
+        let defaultCoordinate = CLLocationCoordinate2D(latitude: 25.0475613, longitude: 121.5173399)
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: currentUserCoordinate ?? defaultCoordinate, span: span)
+        uiView.setRegion(region, animated: true)
     }
     
     typealias UIViewType = MKMapView
 }
 
-// Brian > Keep track of properties that your view needs to render
-// ViewModel > 將fetch資料的code從SwiftUI View抽離出來, 因為SwiftUI View只負責"呈現"以及提供使用者"操作"
-class MapSearchingViewModel: ObservableObject {
-    // @State > 只要變數被改變, SwiftUI就會自動更新有使用到此變數的UI
-    @Published var mapItems = [MKMapItem]()
-    @Published var annotations = [MKPointAnnotation]()
-    @Published var isSearching = false
-    @Published var searchQuery = ""
-    @Published var selectedMapItem: MKMapItem?
-    
-    private var searQuerySubscription: AnyCancellable?
-    
-    init() {
-        searQuerySubscription = $searchQuery
-            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] searchTerm in
-                guard let self = self else { return }
-                self.performSearch(term: searchTerm)
-            }
-    }
-    
-    deinit {
-        searQuerySubscription?.cancel()
-    }
-    
-    fileprivate func performSearch(term: String) {
-        isSearching = true
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = term
-        let localSearch = MKLocalSearch(request: request)
-        localSearch.start { response, error in
-            self.isSearching = false
-            if let error = error {
-                print("Error - Find Nearby LandMark Fail:\(error)")
-                return
-            }
-            var airportAnnotations = [MKPointAnnotation]()
-            response?.mapItems.forEach {
-                let annotaion = MKPointAnnotation()
-                annotaion.title = $0.name
-                annotaion.coordinate = $0.placemark.coordinate
-                airportAnnotations.append(annotaion)
-            }
-            self.mapItems = response?.mapItems ?? []
-            self.annotations = airportAnnotations
-        }
-    }
-
-}
 struct MapSearchingView: View {
     // 如果要觀察的是基本型別, 例如Int, Bool..., 可以使用 @State
     // 如果要觀察的是一個class裡面的基本型別, 可以使用 @ObservedObject, 但是class要服從ObservableObject協議, 且裡面基本型別的屬性要使用 @Published
@@ -112,7 +66,7 @@ struct MapSearchingView: View {
     
     var body: some View {
         ZStack(alignment: .top){ // 後面產生的元件將疊在之前的元件身上
-            MapViewContainer(annotations: vm.annotations, selectedMapItem: vm.selectedMapItem)
+            MapViewContainer(annotations: vm.annotations, selectedMapItem: vm.selectedMapItem, currentUserCoordinate: vm.currentUserCoordinate)
                 .edgesIgnoringSafeArea(.all)
             VStack(spacing: 12 * getHScale()) {
                 HStack {
@@ -149,7 +103,6 @@ struct MapSearchingView: View {
                 }
                 .shadow(radius: 5)
             }
-            
         }
     }
 }

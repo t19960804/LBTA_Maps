@@ -16,6 +16,7 @@
 		0B257BB62711C66600852D96 /* LBTA_MapsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B257BB52711C66600852D96 /* LBTA_MapsUITests.swift */; };
 		0B257BB82711C66600852D96 /* LBTA_MapsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B257BB72711C66600852D96 /* LBTA_MapsUITestsLaunchTests.swift */; };
 		0B257BC92711C7C800852D96 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 0B257BC82711C7C800852D96 /* LBTATools */; };
+		0B54B8FD283A14E700F6EAF2 /* MapSearchingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54B8FC283A14E700F6EAF2 /* MapSearchingViewModel.swift */; };
 		0B5A335527143A2700467F4F /* MapPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5A335427143A2700467F4F /* MapPreview.swift */; };
 		0B63A062281D338200DB63F1 /* CustomCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63A061281D338200DB63F1 /* CustomCalloutView.swift */; };
 		0B63A064281E8F8900DB63F1 /* PlaceImagesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B63A063281E8F8900DB63F1 /* PlaceImagesListVC.swift */; };
@@ -69,6 +70,7 @@
 		0B257BB12711C66600852D96 /* LBTA_MapsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LBTA_MapsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B257BB52711C66600852D96 /* LBTA_MapsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTA_MapsUITests.swift; sourceTree = "<group>"; };
 		0B257BB72711C66600852D96 /* LBTA_MapsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LBTA_MapsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0B54B8FC283A14E700F6EAF2 /* MapSearchingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSearchingViewModel.swift; sourceTree = "<group>"; };
 		0B5A335427143A2700467F4F /* MapPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPreview.swift; sourceTree = "<group>"; };
 		0B63A061281D338200DB63F1 /* CustomCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalloutView.swift; sourceTree = "<group>"; };
 		0B63A063281E8F8900DB63F1 /* PlaceImagesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceImagesListVC.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				0B63A0682826630300DB63F1 /* MapSearchingView.swift */,
+				0B54B8FC283A14E700F6EAF2 /* MapSearchingViewModel.swift */,
 			);
 			path = SwiftUIComponents;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				0B98D18B28143EA20013D3C3 /* PlaceAnnotation.swift in Sources */,
 				0B63A0692826630300DB63F1 /* MapSearchingView.swift in Sources */,
 				0B98D17A2801A2E70013D3C3 /* LocationSearchCell.swift in Sources */,
+				0B54B8FD283A14E700F6EAF2 /* MapSearchingViewModel.swift in Sources */,
 				0B98D178280195A60013D3C3 /* LocationSearchVC.swift in Sources */,
 				0B98D181280AC91C0013D3C3 /* RouteStepCell.swift in Sources */,
 				0B98D16B27EEFC4A0013D3C3 /* CarouselCell.swift in Sources */,
