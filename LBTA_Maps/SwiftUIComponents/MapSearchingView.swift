@@ -22,6 +22,10 @@ struct MapViewContainer: UIViewRepresentable {
             }
             return nil
         }
+        
+        func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            NotificationCenter.default.post(name: NotificationCenter.regionNotification, object: nil, userInfo: ["currentUserRegion":mapView.region])
+        }
     }
     
     func makeCoordinator() -> Coordinator {
@@ -40,6 +44,12 @@ struct MapViewContainer: UIViewRepresentable {
         if annotations.isEmpty == false {
             uiView.addAnnotations(annotations)
             uiView.showAnnotations(annotations, animated: true)
+        } else {
+            // 如果地圖上沒有任何的annotaion, 才將地圖的region設定在使用者的位置
+            let defaultCoordinate = CLLocationCoordinate2D(latitude: 25.0475613, longitude: 121.5173399)
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: currentUserCoordinate ?? defaultCoordinate, span: span)
+            uiView.setRegion(region, animated: true)
         }
         if let item = selectedMapItem {
             annotations.forEach {
@@ -48,10 +58,6 @@ struct MapViewContainer: UIViewRepresentable {
                 }
             }
         }
-        let defaultCoordinate = CLLocationCoordinate2D(latitude: 25.0475613, longitude: 121.5173399)
-        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegion(center: currentUserCoordinate ?? defaultCoordinate, span: span)
-        uiView.setRegion(region, animated: true)
     }
     
     typealias UIViewType = MKMapView
@@ -111,4 +117,8 @@ struct MapSearchingView_Previews: PreviewProvider {
     static var previews: some View {
         MapSearchingView()
     }
+}
+
+extension NotificationCenter {
+    static let regionNotification = NSNotification.Name(rawValue: "regionNotification")
 }

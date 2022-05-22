@@ -16,10 +16,12 @@ class MapSearchingViewModel: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
 
     private var searQuerySubscription: AnyCancellable?
+    private var currentUserRegion: MKCoordinateRegion?
     
     override init() {
         super.init()
         getUserLocation()
+        setupNotification()
         searQuerySubscription = $searchQuery
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .removeDuplicates()
@@ -38,6 +40,9 @@ class MapSearchingViewModel: NSObject, ObservableObject {
         isSearching = true
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = term
+        if let region = self.currentUserRegion {
+            request.region = region
+        }
         let localSearch = MKLocalSearch(request: request)
         localSearch.start { response, error in
             self.isSearching = false
@@ -60,6 +65,14 @@ class MapSearchingViewModel: NSObject, ObservableObject {
     private func getUserLocation() {
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
+    }
+    
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(forName: NotificationCenter.regionNotification, object: nil, queue: .main) { notification in
+            if let region = notification.userInfo?["currentUserRegion"] as? MKCoordinateRegion {
+                self.currentUserRegion = region
+            }
+        }
     }
 }
 
