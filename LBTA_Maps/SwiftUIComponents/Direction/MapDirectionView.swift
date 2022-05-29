@@ -20,49 +20,56 @@ struct MapViewContainer_Direction: UIViewRepresentable {
 }
 
 struct MapDirectionView: View {
+    @State var isSelectingSource = false
+    
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                VStack(spacing: 0) {
-                    VStack {
-                        HStack(spacing: 16 * getHScale()) {
-                            Image("start_location_circles")
-                                .frame(width: 24 * getHScale(), height: 24 * getVScale())
-                            HStack {
-                                Text("Source")
-                                Spacer()
+            NavigationView {
+                ZStack {
+                    VStack(spacing: 0) {
+                        VStack {
+                            HStack(spacing: 16 * getHScale()) {
+                                Image("start_location_circles")
+                                    .frame(width: 24 * getHScale(), height: 24 * getVScale())
+                                NavigationLink(destination: SelectLocationView(isSelecting: $isSelectingSource), isActive: $isSelectingSource) {
+                                    HStack {
+                                        Text("Source")
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(3 * getHScale())
+                                }
                             }
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(3 * getHScale())
-                        }
-                        HStack(spacing: 16 * getHScale()) {
-                            Image("annotation_icon")
-                                .renderingMode(.template)
-                                .foregroundColor(Color.white)
-                                .frame(width: 24 * getHScale(), height: 24 * getVScale())
-                            HStack {
-                                Text("Destination")
-                                Spacer()
+                            HStack(spacing: 16 * getHScale()) {
+                                Image("annotation_icon")
+                                    .renderingMode(.template)
+                                    .foregroundColor(Color.white)
+                                    .frame(width: 24 * getHScale(), height: 24 * getVScale())
+                                HStack {
+                                    Text("Destination")
+                                    Spacer()
+                                }
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(3 * getHScale())
                             }
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(3 * getHScale())
                         }
-                    }
-                    .padding()
-                    .background(Color.blue)
-                    MapViewContainer_Direction()
-                        .edgesIgnoringSafeArea(.bottom)
-                }
-                //Safe Area Top View
-                VStack {
-                    Spacer()
-                        .frame(width: geometry.size.width, height: geometry.safeAreaInsets.top)
+                        .padding()
                         .background(Color.blue)
-                        .edgesIgnoringSafeArea(.top)
-                    Spacer()
+                        MapViewContainer_Direction()
+                            .edgesIgnoringSafeArea(.bottom)
+                    }
+                    //Safe Area Top View
+                    VStack {
+                        Spacer()
+                            .frame(width: geometry.size.width, height: geometry.safeAreaInsets.top)
+                            .background(Color.blue)
+                            .edgesIgnoringSafeArea(.top)
+                        Spacer()
+                    }
                 }
+                .navigationBarHidden(true)
             }
         }
     }
