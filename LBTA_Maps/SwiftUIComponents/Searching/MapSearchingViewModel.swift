@@ -5,7 +5,7 @@ import MapKit
 // Brian > Keep track of properties that your view needs to render
 // ViewModel > 將fetch資料的code從SwiftUI View抽離出來, 因為SwiftUI View只負責"呈現"以及提供使用者"操作"
 class MapSearchingViewModel: NSObject, ObservableObject {
-    // @State > 只要變數被改變, SwiftUI就會自動更新有使用到此變數的UI
+    // @State / @Published> 只要變數被改變, SwiftUI就會自動更新有使用到此變數的UI
     @Published var mapItems = [MKMapItem]()
     @Published var annotations = [MKPointAnnotation]()
     @Published var isSearching = false

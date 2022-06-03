@@ -71,7 +71,7 @@ struct MapSearchingView: View {
     @StateObject var vm = MapSearchingViewModel()
     
     var body: some View {
-        ZStack(alignment: .top){ // 後面產生的元件將疊在之前的元件身上
+        ZStack(alignment: .top){
             MapViewContainer(annotations: vm.annotations, selectedMapItem: vm.selectedMapItem, currentUserCoordinate: vm.currentUserCoordinate)
                 .edgesIgnoringSafeArea(.all)
             VStack(spacing: 12 * getHScale()) {
