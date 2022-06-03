@@ -20,7 +20,7 @@ struct MapViewContainer_Direction: UIViewRepresentable {
 }
 
 struct MapDirectionView: View {
-    @State var isSelectingSource = false
+    @EnvironmentObject var environment: DirectionEnvironment
     
     var body: some View {
         GeometryReader { geometry in
@@ -31,28 +31,32 @@ struct MapDirectionView: View {
                             HStack(spacing: 16 * getHScale()) {
                                 Image("start_location_circles")
                                     .frame(width: 24 * getHScale(), height: 24 * getVScale())
-                                NavigationLink(destination: SelectLocationView(isSelecting: $isSelectingSource), isActive: $isSelectingSource) {
+                                NavigationLink(destination: SelectLocationView(), isActive: $environment.isSelectingSource) {
                                     HStack {
-                                        Text("Source")
+                                        Text(environment.sourceMapItem?.name ?? "起點")
                                         Spacer()
                                     }
                                     .padding()
                                     .background(Color.white)
                                     .cornerRadius(3 * getHScale())
                                 }
+                                .foregroundColor(Color.black)
                             }
                             HStack(spacing: 16 * getHScale()) {
                                 Image("annotation_icon")
                                     .renderingMode(.template)
                                     .foregroundColor(Color.white)
                                     .frame(width: 24 * getHScale(), height: 24 * getVScale())
-                                HStack {
-                                    Text("Destination")
-                                    Spacer()
+                                NavigationLink(destination: SelectLocationView(), isActive: $environment.isSelectingDestination) {
+                                    HStack {
+                                        Text(environment.destinationMapItem?.name ?? "終點")
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(3 * getHScale())
                                 }
-                                .padding()
-                                .background(Color.white)
-                                .cornerRadius(3 * getHScale())
+                                .foregroundColor(Color.black)
                             }
                         }
                         .padding()
@@ -72,11 +76,5 @@ struct MapDirectionView: View {
                 .navigationBarHidden(true)
             }
         }
-    }
-}
-
-struct MapDirectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapDirectionView()
     }
 }

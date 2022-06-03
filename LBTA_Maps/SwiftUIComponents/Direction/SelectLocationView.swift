@@ -2,17 +2,15 @@ import SwiftUI
 import MapKit
 
 struct SelectLocationView: View {
-    //@Binding > 參考Parent View的資料源, 以及將Child View內部對資料源的操作反饋到Parent View, 避免Parent and Child之間的資料不同步
-    //以後看到某個View要傳入的參數為Binding類別, 就代表內部有屬性使用 @Binding, 目的是要讓資料同步
-    @Binding var isSelecting: Bool
     @State var mapItems = [MKMapItem]()
     @State var searchQuery = ""
+    @EnvironmentObject var environment: DirectionEnvironment
     
     var body: some View {
         VStack {
             HStack(spacing: 16 * getHScale()) {
                 Button {
-                    isSelecting = false
+                    backButtonPressed()
                 } label: {
                     Text("Back")
                 }
@@ -39,15 +37,25 @@ struct SelectLocationView: View {
             //https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E5%95%8F%E9%A1%8C%E8%A7%A3%E7%AD%94%E9%9B%86/swiftui-%E7%9A%84-foreach-7ccd426e53ac
             ScrollView {
                 ForEach(mapItems, id: \.self) { item in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(item.name ?? "")")
-                                .font(.headline)
-                            Text("\(item.placemark.addressString)")
+                    Button {
+                        if environment.isSelectingSource {
+                            environment.sourceMapItem = item
+                        } else {
+                            environment.destinationMapItem = item
                         }
-                        Spacer()
+                        backButtonPressed()
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("\(item.name ?? "")")
+                                    .font(.headline)
+                                Text("\(item.placemark.addressString)")
+                            }
+                            Spacer()
+                        }
+                        .padding()
                     }
-                    .padding()
+                    .foregroundColor(Color.black)
                 }
             }
             Spacer()
@@ -55,4 +63,16 @@ struct SelectLocationView: View {
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarHidden(true)
     }
+    
+    func backButtonPressed() {
+        environment.isSelectingSource = false
+        environment.isSelectingDestination = false
+    }
+}
+
+class DirectionEnvironment: ObservableObject { // View之間的Share Data, 一邊改動, 另一邊讀取
+    @Published var sourceMapItem: MKMapItem?
+    @Published var destinationMapItem: MKMapItem?
+    @Published var isSelectingSource = false
+    @Published var isSelectingDestination = false
 }
