@@ -1,5 +1,6 @@
 import SwiftUI
 import MapKit
+import Combine
 
 struct SelectLocationView: View {
     @State var mapItems = [MKMapItem]()
@@ -75,4 +76,41 @@ class DirectionEnvironment: ObservableObject { // View之間的Share Data, 一�
     @Published var destinationMapItem: MKMapItem?
     @Published var isSelectingSource = false
     @Published var isSelectingDestination = false
+    @Published var route: MKRoute?
+    
+    var routeSubscriber: AnyCancellable?
+    
+    init() {
+        // 監聽sourceMapItem / destinationMapItem的改變
+        // CombineLatest > 一旦所有Publisher發佈過後, 才會發佈第一次, 而後續只要任一Publisher發佈, 就會將所有Publisher最新的元素組合發佈.
+        //https://developer.apple.com/documentation/combine/publisher/combinelatest(_:_:)-5crqg
+        routeSubscriber = Publishers.CombineLatest($sourceMapItem, $destinationMapItem)
+            .sink { [weak self] items in
+                guard let self = self,
+                      let source = items.0,
+                      let destination = items.1 else { return }
+                self.requestRoute(source, destination)
+            }
+    }
+    
+    deinit {
+        routeSubscriber?.cancel()
+    }
+    
+    private func requestRoute(_ source: MKMapItem, _ destination: MKMapItem) {
+        let request = MKDirections.Request()
+        request.source = source
+        request.destination = destination
+        request.requestsAlternateRoutes = true
+        request.transportType = .walking
+        let directions = MKDirections(request: request)
+        directions.calculate { response, error in
+            if let error = error {
+                print("Error - Calculate directions failed:\(error)")
+                return
+            }
+            print("Info - Success calculate routes")
+            self.route = response?.routes.first
+        }
+    }
 }
