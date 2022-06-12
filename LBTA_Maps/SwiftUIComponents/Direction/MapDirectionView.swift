@@ -38,9 +38,7 @@ struct MapViewContainer_Direction: UIViewRepresentable {
             uiView.addAnnotation(annotation)
         }
         uiView.showAnnotations(uiView.annotations, animated: true)
-        print("tlee route:\(environment.route)")
         if let route = environment.route {
-            print("tlee add")
             uiView.addOverlay(route.polyline)
         }
     }
@@ -69,18 +67,7 @@ struct MapDirectionView: View {
                     }
                     TopSafeAreaView()
                     
-                    VStack(spacing: 15 * getVScale()) {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                            .scaleEffect(1.5)
-                        Text("Loading...")
-                            .font(.headline)
-                            .foregroundColor(Color.white)
-                    }
-                    .frame(width: 100, height: 100)
-                    .background(Color.black)
-                    .cornerRadius(8 * getHScale())
-                    .opacity(environment.isCalculatingRoute ? 1 : 0)
+                    LoadingHud()
                 }
                 .navigationBarHidden(true)
             }
@@ -125,5 +112,24 @@ struct TopSafeAreaView: View {
                 Spacer()
             }
         }
+    }
+}
+
+struct LoadingHud: View {
+    @EnvironmentObject var environment: DirectionEnvironment
+
+    var body: some View {
+        VStack(spacing: 15 * getVScale()) {
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                .scaleEffect(1.5)
+            Text("Loading...")
+                .font(.headline)
+                .foregroundColor(Color.white)
+        }
+        .frame(width: 100, height: 100)
+        .background(Color.black)
+        .cornerRadius(8 * getHScale())
+        .opacity(environment.isCalculatingRoute ? 1 : 0)
     }
 }
