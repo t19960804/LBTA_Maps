@@ -6,6 +6,10 @@ import MapKit
 // ViewModel > 將fetch資料的code從SwiftUI View抽離出來, 因為SwiftUI View只負責"呈現"以及提供使用者"操作"
 class MapSearchingViewModel: NSObject, ObservableObject {
     // @State / @Published> 只要變數被改變, SwiftUI就會自動更新有使用到此變數的UI
+    // 如果要觀察的是基本型別, 例如Int, Bool..., 使用 @State
+    // 如果要觀察的是一個class裡面的基本型別, 可以使用 @ObservedObject, 但是class要服從ObservableObject協議, 裡面基本型別要使用 @Published
+    // 在iOS14時推出 @StateObject來取代 @ObservedObject, 因為 @ObservedObject有Bug
+    // 詳情請見 https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E6%95%99%E5%AE%A4/10-observedobject%E7%9A%84%E4%BD%BF%E7%94%A8-187eb99d86bb
     @Published var mapItems = [MKMapItem]()
     @Published var annotations = [MKPointAnnotation]()
     @Published var isSearching = false
