@@ -57,52 +57,57 @@ struct MapDirectionView: View {
                 ZStack {
                     VStack(spacing: 0) {
                         VStack {
-                            HStack(spacing: 16 * getHScale()) {
-                                Image("start_location_circles")
-                                    .frame(width: 24 * getHScale(), height: 24 * getVScale())
-                                NavigationLink(destination: SelectLocationView(), isActive: $environment.isSelectingSource) {
-                                    HStack {
-                                        Text(environment.sourceMapItem?.name ?? "起點")
-                                        Spacer()
-                                    }
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(3 * getHScale())
-                                }
-                                .foregroundColor(Color.black)
-                            }
-                            HStack(spacing: 16 * getHScale()) {
-                                Image("annotation_icon")
-                                    .renderingMode(.template)
-                                    .foregroundColor(Color.white)
-                                    .frame(width: 24 * getHScale(), height: 24 * getVScale())
-                                NavigationLink(destination: SelectLocationView(), isActive: $environment.isSelectingDestination) {
-                                    HStack {
-                                        Text(environment.destinationMapItem?.name ?? "終點")
-                                        Spacer()
-                                    }
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(3 * getHScale())
-                                }
-                                .foregroundColor(Color.black)
-                            }
+                            MapItemView(isSelecting: $environment.isSelectingSource, imageName: "start_location_circles", title: environment.sourceMapItem?.name ?? "起點")
+                            MapItemView(isSelecting: $environment.isSelectingDestination, imageName: "annotation_icon", title: environment.destinationMapItem?.name ?? "終點")
                         }
                         .padding()
                         .background(Color.blue)
                         MapViewContainer_Direction()
                             .edgesIgnoringSafeArea(.bottom)
                     }
-                    //Safe Area Top View
-                    VStack {
-                        Spacer()
-                            .frame(width: geometry.size.width, height: geometry.safeAreaInsets.top)
-                            .background(Color.blue)
-                            .edgesIgnoringSafeArea(.top)
-                        Spacer()
-                    }
+                    TopSafeAreaView()
                 }
                 .navigationBarHidden(true)
+            }
+        }
+    }
+}
+
+struct MapItemView: View {
+    @Binding var isSelecting: Bool
+    var imageName: String
+    var title: String
+    
+    var body: some View {
+        HStack(spacing: 16 * getHScale()) {
+            Image(imageName)
+                .renderingMode(.template)
+                .foregroundColor(Color.white)
+                .frame(width: 24 * getHScale(), height: 24 * getVScale())
+            NavigationLink(destination: SelectLocationView(), isActive: $isSelecting) {
+                HStack {
+                    Text(title)
+                    Spacer()
+                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(3 * getHScale())
+            }
+            .foregroundColor(Color.black)
+        }
+
+    }
+}
+
+struct TopSafeAreaView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            VStack {
+                Spacer()
+                    .frame(width: geometry.size.width, height: geometry.safeAreaInsets.top)
+                    .background(Color.blue)
+                    .edgesIgnoringSafeArea(.top)
+                Spacer()
             }
         }
     }
