@@ -77,6 +77,7 @@ class DirectionEnvironment: ObservableObject { // View之間的Share Data, 一�
     @Published var isSelectingSource = false
     @Published var isSelectingDestination = false
     @Published var route: MKRoute?
+    @Published var isCalculatingRoute = false
     
     var routeSubscriber: AnyCancellable?
     
@@ -104,7 +105,10 @@ class DirectionEnvironment: ObservableObject { // View之間的Share Data, 一�
         request.requestsAlternateRoutes = true
         request.transportType = .walking
         let directions = MKDirections(request: request)
+        isCalculatingRoute = true
+        route = nil
         directions.calculate { response, error in
+            self.isCalculatingRoute = false
             if let error = error {
                 print("Error - Calculate directions failed:\(error)")
                 return
