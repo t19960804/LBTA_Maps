@@ -66,7 +66,7 @@ struct MapDirectionView: View {
                             .edgesIgnoringSafeArea(.bottom)
                     }
                     TopSafeAreaView()
-                    
+                    ShowRoutesButton()
                     LoadingHud()
                 }
                 .navigationBarHidden(true)
@@ -131,5 +131,60 @@ struct LoadingHud: View {
         .background(Color.black)
         .cornerRadius(8 * getHScale())
         .opacity(environment.isCalculatingRoute ? 1 : 0)
+    }
+}
+
+struct ShowRoutesButton: View {
+    @EnvironmentObject var environment: DirectionEnvironment
+    @State var isShowingSheet = false
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            Button {
+                self.isShowingSheet = true
+            } label: {
+                Text("Show Route")
+                    .foregroundColor(Color.white)
+                    .frame(width: 300 * getHScale(), height: 50 * getVScale())
+            .background(Color.black)
+                    .cornerRadius(5 * getHScale())
+            }
+            Spacer()
+                .frame(width: 25 * getHScale(), height: 25 * getVScale())
+        }
+        .sheet(isPresented: $isShowingSheet) { // Present VC In UIKit
+            RouteInfoView(route: self.environment.route)
+        }
+    }
+}
+
+struct RouteInfoView: View {
+    // route變數是RouteInfoView的dependency
+    // 何謂dependency?
+    // 車子依賴輪子才能上路, 如果一台車的設計太特殊, 特殊到只能用某廠牌的輪胎, 此時這台車子就會比較難維護
+    // RouteInfoView則依賴route變數來運作
+    // 換到軟體也是同樣的概念, 只是我們稱呼這種依賴叫做耦合, 耦合越高就會越難維護
+    // A類別不應該直接依賴B類別, 而是使用protocol或class來實作多型, 降低依賴的程度
+    // https://ithelp.ithome.com.tw/articles/10216539
+    // https://stackoverflow.com/questions/2832017/what-is-the-difference-between-loose-coupling-and-tight-coupling-in-the-object-o
+    //依賴注入透過外部控制dependency, 增加可測試性
+    var route: MKRoute?
+    var body: some View {
+        ScrollView { // ScrollView + ForEach實作TableView比使用List簡單
+            VStack {
+                Text("Routes")
+                    .font(.system(size: 16, weight: .bold))
+                    .padding(.init(top: 10, leading: 0, bottom: 10, trailing: 0))
+                ForEach(route?.steps ?? [], id: \.self) { step in
+                    HStack {
+                        Text("\(step.instructions)")
+                        Spacer()
+                        Text("\(String(format: "%.2f mi", step.distance * 0.00062137))")
+                    }
+                    .padding(.init(top: 15, leading: 15, bottom: 15, trailing: 15))
+                }
+            }
+        }
     }
 }
