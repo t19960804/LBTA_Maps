@@ -59,7 +59,9 @@ struct SlideMenuView: View {
                 
                 HStack {
                     ZStack { //用ZStack將Text置於Background View的中間
-                        Color.white
+                        //.systemBackground > LightMode為白色, DarkMode為黑色
+                        //.label > LightMode為黑色, DarkMode為白色
+                        Color(.systemBackground)
                             .edgesIgnoringSafeArea(.all) //可以用Color當Background View
                         VStack {
                             HStack {
@@ -75,20 +77,22 @@ struct SlideMenuView: View {
                                             self.mapType = item.mapType
                                             self.isMenuShowing.toggle()
                                         } label: {
-                                            HStack {
-                                                Image(systemName: item.imageName)
-                                                    .foregroundColor(Color.black)
-                                                    .frame(width: 35 * getHScale(), height: 35 * getVScale())
-                                                Text("\(item.title)")
-                                                    .foregroundColor(Color.black)
-                                                    .font(.system(size: 20 * getHScale()))
+                                            ZStack(alignment: .leading) {
+                                                Color(self.mapType == item.mapType ? .label : .systemBackground)
+                                                    .frame(width: width / 2, height: 42 * getVScale())
+                                                HStack {
+                                                    Image(systemName: item.imageName)
+                                                        .frame(width: 35 * getHScale(), height: 35 * getVScale())
+                                                        .padding(.init(top: 0, leading: 8 * getHScale(), bottom: 0, trailing: 0))
+                                                    Text("\(item.title)")
+                                                        .font(.system(size: 20 * getHScale()))
+                                                }
+                                                .foregroundColor(self.mapType == item.mapType ? Color(.systemBackground) : Color(.label))
                                             }
                                         }
                                     }
                                 }
-                                Spacer()
                             }
-                            .padding()
                             Spacer()
                         }
                     }
